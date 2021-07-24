@@ -46,7 +46,6 @@ private extension GetTestResponseMapper {
         questions.compactMap { restJSON -> Question? in
             guard
                 let id = restJSON["id"] as? Int,
-                let question = restJSON["question"] as? String,
                 let multiple = restJSON["multiple"] as? Bool,
                 let isAnswered = restJSON["answered"] as? Bool,
                 let answersJSON = restJSON["answers"] as? [[String: Any]]
@@ -63,6 +62,7 @@ private extension GetTestResponseMapper {
             let image = (restJSON["image"] as? String)?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             let video = (restJSON["video"] as? String)?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             
+            let question = restJSON["question"] as? String ?? ""
             let questionHtml = restJSON["question_html"] as? String ?? ""
             
             let reference = restJSON["reference"] as? String
