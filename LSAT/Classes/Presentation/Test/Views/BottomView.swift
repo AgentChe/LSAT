@@ -30,6 +30,10 @@ class BottomView: UIView {
         
         gradientLayer.frame = bounds
     }
+    
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        bottomButton.frame.contains(point)
+    }
 }
 
 // MARK: Public
