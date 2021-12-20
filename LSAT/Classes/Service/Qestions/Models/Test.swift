@@ -23,6 +23,7 @@ struct Question {
     let multiple: Bool
     let explanation: String?
     let explanationHtml: String?
+    let media: [URL]
     let isAnswered: Bool
     let reference: String?
 }

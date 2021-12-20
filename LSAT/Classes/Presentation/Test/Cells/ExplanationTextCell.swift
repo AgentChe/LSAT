@@ -1,16 +1,15 @@
 //
-//  ExplanationCell.swift
-//  Nursing
+//  ExplanationTextCell.swift
+//  CDL
 //
-//  Created by Vitaliy Zagorodnov on 31.01.2021.
+//  Created by Vitaliy Zagorodnov on 05.12.2021.
 //
-
 import UIKit
 
-class ExplanationCell: UITableViewCell {
-    private lazy var titleLabel = makeTitleLabel()
+final class ExplanationTextCell: UITableViewCell {
+    
     private lazy var explanationLabel = makeExplanationLabel()
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         initialize()
@@ -23,7 +22,7 @@ class ExplanationCell: UITableViewCell {
 }
 
 // MARK: Public
-extension ExplanationCell {
+extension ExplanationTextCell {
     func confugure(explanation: String, html: String) {
         let attr = TextAttributes()
             .font(Fonts.SFProRounded.bold(size: 17.scale))
@@ -35,7 +34,7 @@ extension ExplanationCell {
 }
 
 // MARK: Private
-private extension ExplanationCell {
+private extension ExplanationTextCell {
     func initialize() {
         backgroundColor = .clear
         selectionStyle = .none
@@ -59,16 +58,10 @@ private extension ExplanationCell {
 }
 
 // MARK: Make constraints
-private extension ExplanationCell {
+private extension ExplanationTextCell {
     func makeConstraints() {
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20.scale),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16.scale),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.scale),
-            titleLabel.bottomAnchor.constraint(equalTo: explanationLabel.topAnchor, constant: -15.scale)
-        ])
-        
-        NSLayoutConstraint.activate([
+            explanationLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10.scale),
             explanationLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16.scale),
             explanationLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.scale),
             explanationLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
@@ -77,20 +70,7 @@ private extension ExplanationCell {
 }
 
 // MARK: Lazy initialization
-private extension ExplanationCell {
-    func makeTitleLabel() -> UILabel {
-        let view = UILabel()
-        let attr = TextAttributes()
-            .font(Fonts.SFProRounded.bold(size: 17.scale))
-            .textColor(Appearance.mainColor)
-            .lineHeight(20.scale)
-        
-        view.attributedText = "Question.Explanation".localized.attributed(with: attr)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(view)
-        return view
-    }
-    
+private extension ExplanationTextCell {
     func makeExplanationLabel() -> UILabel {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false

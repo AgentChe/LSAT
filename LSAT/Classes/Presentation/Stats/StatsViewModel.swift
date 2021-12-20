@@ -20,7 +20,7 @@ final class StatsViewModel {
 private extension StatsViewModel {
     func makeCourseName() -> Driver<String> {
         courseManager
-            .rxGetSelectedCourse()
+            .retrieveSelectedCourse()
             .compactMap { $0?.name }
             .asDriver(onErrorDriveWith: .empty())
     }

@@ -75,8 +75,15 @@ extension QuestionTableView: UITableViewDataSource {
             let cell = dequeueReusableCell(withIdentifier: String(describing: AnswersCell.self), for: indexPath) as! AnswersCell
             cell.configure(answers: answers, isMultiple: isMultiple, didTap: selectedIds)
             return cell
-        case let .explanation(explanation, html):
-            let cell = dequeueReusableCell(withIdentifier: String(describing: ExplanationCell.self), for: indexPath) as! ExplanationCell
+        case .explanationTitle:
+            let cell = dequeueReusableCell(withIdentifier: String(describing: ExplanationTitleCell.self), for: indexPath) as! ExplanationTitleCell
+            return cell
+        case let .explanationImage(url):
+            let cell = dequeueReusableCell(withIdentifier: String(describing: ExplanationImageCell.self), for: indexPath) as! ExplanationImageCell
+            cell.confugure(image: url)
+            return cell
+        case let .explanationText(explanation, html):
+            let cell = dequeueReusableCell(withIdentifier: String(describing: ExplanationTextCell.self), for: indexPath) as! ExplanationTextCell
             cell.confugure(explanation: explanation, html: html)
             return cell
         case let .result(elements):
@@ -91,6 +98,16 @@ extension QuestionTableView: UITableViewDataSource {
     }
 }
 
+extension QuestionTableView: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard case let .explanationImage(url) = elements[indexPath.row] else {
+            return
+        }
+        
+        expandContent.accept(.image(url))
+    }
+}
+
 // MARK: Private
 private extension QuestionTableView {
     func initialize() {
@@ -98,11 +115,14 @@ private extension QuestionTableView {
         register(QuestionContentCell.self, forCellReuseIdentifier: String(describing: QuestionContentCell.self))
         register(AnswersCell.self, forCellReuseIdentifier: String(describing: AnswersCell.self))
         register(QuestionCell.self, forCellReuseIdentifier: String(describing: QuestionCell.self))
-        register(ExplanationCell.self, forCellReuseIdentifier: String(describing: ExplanationCell.self))
+        register(ExplanationImageCell.self, forCellReuseIdentifier: String(describing: ExplanationImageCell.self))
+        register(ExplanationTextCell.self, forCellReuseIdentifier: String(describing: ExplanationTextCell.self))
+        register(ExplanationTitleCell.self, forCellReuseIdentifier: String(describing: ExplanationTitleCell.self))
         register(QuestionReferenceCell.self, forCellReuseIdentifier: String(describing: QuestionReferenceCell.self))
         
         separatorStyle = .none
         
         dataSource = self
+        delegate = self
     }
 }

@@ -40,7 +40,7 @@ final class TestViewModel {
 private extension TestViewModel {
     func makeCourseName() -> Driver<String> {
         courseManager
-            .rxGetSelectedCourse()
+            .retrieveSelectedCourse()
             .compactMap { $0?.name }
             .asDriver(onErrorDriveWith: .empty())
     }
@@ -283,10 +283,26 @@ private extension TestViewModel {
                 return .result(result)
             }
             
-            var explanation = [TestingCellType]()
-            if (currentQuestion.explanation != nil || currentQuestion.explanationHtml != nil) && [.none, .fullComplect].contains(currentMode) {
-                explanation.append(.explanation(currentQuestion.explanation ?? "",
-                                                html: currentQuestion.explanationHtml ?? ""))
+            let explanation: [TestingCellType]
+            
+            if [.none, .fullComplect].contains(testMode) {
+                let explanationText: TestingCellType?
+                if (currentQuestion.explanation != nil || currentQuestion.explanationHtml != nil) {
+                    explanationText = .explanationText(currentQuestion.explanation ?? "", html: currentQuestion.explanationHtml ?? "")
+                } else {
+                    explanationText = nil
+                }
+                
+                let explanationImages = currentQuestion.media.map { TestingCellType.explanationImage($0)}
+                
+                if explanationText != nil || !explanationImages.isEmpty {
+                    explanation = [.explanationTitle] + explanationImages + [explanationText].compactMap { $0 }
+                } else {
+                    explanation = []
+                }
+                
+            } else {
+                explanation = []
             }
             
             var referenceCellType = [TestingCellType]()

@@ -65,8 +65,6 @@ private extension SplashViewController {
         switch step {
         case .onboarding:
             UIApplication.shared.keyWindow?.rootViewController = OnboardingViewController.make()
-        case .courses:
-            UIApplication.shared.keyWindow?.rootViewController = CoursesViewController.make(howOpen: .root)
         case .course:
             UIApplication.shared.keyWindow?.rootViewController = CourseViewController.make()
         case .paygate:

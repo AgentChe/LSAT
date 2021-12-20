@@ -16,19 +16,11 @@ final class CoursesManagerCore: CoursesManager {
 
 // MARK: API
 extension CoursesManagerCore {
-    func select(course: Course) {
-        guard let data = try? JSONEncoder().encode(course) else {
-            return
-        }
-        
-        UserDefaults.standard.set(data, forKey: Constants.selectedCourseCacheKey)
-    }
-    
     func getSelectedCourse() -> Course? {
         guard let data = UserDefaults.standard.data(forKey: Constants.selectedCourseCacheKey) else {
             return nil
         }
-        
+
         return try? JSONDecoder().decode(Course.self, from: data)
     }
 }
@@ -49,29 +41,55 @@ extension CoursesManagerCore {
     }
     
     func rxSelect(course: Course) -> Single<Void> {
-        Single<Void>
-            .create { [weak self] event in
-                self?.select(course: course)
-                
-                event(.success(Void()))
-                
-                return Disposables.create()
-            }
-            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
-            .observe(on: MainScheduler.asyncInstance)
+        guard let userToken = SessionManagerCore().getSession()?.userToken else {
+            return .error(SignError.tokenNotFound)
+        }
+        
+        let request = SetSelectCourseRequest(userToken: userToken, courseId: course.id)
+        
+        return SDKStorage.shared
+            .restApiTransport
+            .callServerApi(requestBody: request)
+            .map { _ in Void() }
+            .do(onSuccess: {
+                guard let data = try? JSONEncoder().encode(course) else {
+                    return
+                }
+        
+                UserDefaults.standard.set(data, forKey: Constants.selectedCourseCacheKey)
+            })
     }
     
-    func rxGetSelectedCourse() -> Single<Course?> {
-        Single<Course?>
-            .create { [weak self] event in
-                let selectedCourse = self?.getSelectedCourse()
+    func retrieveSelectedCourse(forceUpdate: Bool = false) -> Single<Course?> {
+        guard forceUpdate else {
+            return .deferred { [weak self] in
+                guard let self = self else {
+                    return .never()
+                }
                 
-                event(.success(selectedCourse))
+                let course = self.getSelectedCourse()
                 
-                return Disposables.create()
+                return .just(course)
             }
-            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
-            .observe(on: MainScheduler.asyncInstance)
+        }
+        
+        guard let userToken = SessionManagerCore().getSession()?.userToken else {
+            return .error(SignError.tokenNotFound)
+        }
+        
+        let request = GetSelectedCourseRequest(userToken: userToken)
+        
+        return SDKStorage.shared
+            .restApiTransport
+            .callServerApi(requestBody: request)
+            .map { GetSelectedCourseResponse.map(from: $0) }
+            .do(onSuccess: { course in
+                guard let data = try? JSONEncoder().encode(course) else {
+                    return
+                }
+
+                UserDefaults.standard.set(data, forKey: Constants.selectedCourseCacheKey)
+            })
     }
 }
 

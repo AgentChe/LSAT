@@ -23,7 +23,7 @@ final class StudyViewModel {
 private extension StudyViewModel {
     func makeCourseName() -> Driver<String> {
         courseManager
-            .rxGetSelectedCourse()
+            .retrieveSelectedCourse()
             .compactMap { $0?.name }
             .asDriver(onErrorDriveWith: .empty())
     }

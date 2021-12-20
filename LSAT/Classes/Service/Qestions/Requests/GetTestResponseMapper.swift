@@ -66,6 +66,8 @@ private extension GetTestResponseMapper {
             let questionHtml = restJSON["question_html"] as? String ?? ""
             
             let reference = restJSON["reference"] as? String
+            let media = restJSON["explanation_media"] as? [String] ?? []
+            let mediaURLs = media.compactMap { URL(string: $0)}
             
             return Question(
                 id: id,
@@ -77,6 +79,7 @@ private extension GetTestResponseMapper {
                 multiple: multiple,
                 explanation: explanation,
                 explanationHtml: explanationHtml,
+                media: mediaURLs,
                 isAnswered: isAnswered,
                 reference: reference
             )

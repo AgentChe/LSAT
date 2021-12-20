@@ -50,12 +50,12 @@
 "Onboarding.SlideCount.Title" = "HOW MANY TESTS WOULD YOU WANT TO TAKE DAILY?";
 "Onboarding.SlidePreloader.Title" = "PREPARING YOUR\nINDIVIDUAL STUDY PLAN";
 "Onboarding.SlidePreloader.Preloader1" = "Analyzing your skill level...";
-"Onboarding.SlidePreloader.Preloader2" = "Anazling your study preferences...";
+"Onboarding.SlidePreloader.Preloader2" = "Analyzing your study preferences...";
 "Onboarding.SlidePlan.Title" = "YOUR PERSONAL 98% PASS\nRATE STUDY PLAN";
-"Onboarding.SlidePlan.Cell1" = "Over 500 tests";
-"Onboarding.SlidePlan.Cell2" = "5000+ individual questions";
-"Onboarding.SlidePlan.Cell3" = "Different courses";
-"Onboarding.SlidePlan.Cell4" = "reminders and notifications";
+"Onboarding.SlidePlan.Cell1" = "Multiple sets of questions";
+ "Onboarding.SlidePlan.Cell2" = "Consise explanation";
+ "Onboarding.SlidePlan.Cell3" = "Different exam modes";
+ "Onboarding.SlidePlan.Cell4" = "Reminders and notifications";
 "Onboarding.SlidePlan.Button" = "Let’s go!";
 "Onboarding.Welcome.Title1" = "PERSONAL STUDY PLAN";
 "Onboarding.Welcome.Subtitle1" = "The question bank is divided into sets\naccording to your skills, requirements\nand settings";
@@ -108,9 +108,9 @@
 "Settings.Unlock" = "Unlock";
 "Settings.Premium" = "PREMIUM";
 "Settings.SelectedExam" = "Selected Exam";
-"Settings.RateUs" = "Rate us";
-"Settings.ContactUs" = "Contact us";
-"Settings.TermsOfUse" = "Terms of use";
+"Settings.RateUs" = "Rate Us";
+ "Settings.ContactUs" = "Contact Us";
+ "Settings.TermsOfUse" = "Terms of Use";
 "Settings.PrivacyPolicy" = "Privacy Policy";
 "Settings.ExamMode" = "Exam mode";
 "Settings.References" = "References";
@@ -130,7 +130,7 @@
 // MARK: Paygate
 "Paygate.Main.Title" = "KNOW THE QUESTIONS\nBEFOREHAND";
 "Paygate.Main.Cell1" = "Don’t spend hours learning";
-"Paygate.Main.Cell2" = "Train yourself with 10000+ questions";
+"Paygate.Main.Cell2" = "Train yourself with %i+ questions";
 "Paygate.Main.Cell3" = "98% pass rate on the first attempt!";
 "Paygate.Main.Info" = "Secured with iTunes. Cancel anytime.";
 "Paygate.Main.TermsOfUse" = "Terms of use";
