@@ -7,7 +7,9 @@
 
 import RxSwift
 
-final class ProfileManagerCore {}
+final class ProfileManagerCore {
+    private let defaultRequestWrapper = DefaultRequestWrapper()
+}
 
 // MARK: Study
 extension ProfileManagerCore {
@@ -33,8 +35,7 @@ extension ProfileManagerCore {
                                  testWhen: testWhen,
                                  notificationKey: notificationKey)
         
-        return SDKStorage.shared
-            .restApiTransport
+        return defaultRequestWrapper
             .callServerApi(requestBody: request)
             .flatMap { [weak self] _ -> Single<Void> in
                 guard let self = self else {
@@ -43,6 +44,20 @@ extension ProfileManagerCore {
                 
                 return self.notifyAboutChangedIfNotNil(testMode: testMode)
             }
+    }
+    
+    func syncTokens(oldToken: String, newToken: String) -> Single<Void> {
+        let request = SyncTokensRequest(oldToken: oldToken, newToken: newToken)
+        
+        return defaultRequestWrapper
+            .callServerApi(requestBody: request)
+            .map { _ in Void() }
+    }
+    
+    func login(userToken: String) -> Single<Void> {
+        defaultRequestWrapper
+            .callServerApi(requestBody: LoginRequest(userToken: userToken))
+            .map { _ in Void() }
     }
 }
 
@@ -55,8 +70,7 @@ extension ProfileManagerCore {
         
         let request = GetTestModeRequest(userToken: userToken)
         
-        return SDKStorage.shared
-            .restApiTransport
+        return defaultRequestWrapper
             .callServerApi(requestBody: request)
             .map(GetTestModeResponseMapper.map(from:))
     }

@@ -14,6 +14,11 @@ final class SettingsViewModel {
     private lazy var profileManager = ProfileManagerCore()
     
     lazy var sections = makeSections()
+    lazy var activityIndicator = makeActivityIndicator()
+
+    private lazy var courseActivityIndicator = RxActivityIndicator()
+    private lazy var modeActivityIndicator = RxActivityIndicator()
+    private lazy var referencesActivityIndicator = RxActivityIndicator()
 }
 
 // MARK: Private
@@ -72,6 +77,7 @@ private extension SettingsViewModel {
     func course() -> Driver<Course> {
         coursesManager
             .retrieveSelectedCourse()
+            .trackActivity(courseActivityIndicator)
             .compactMap { $0 }
             .asDriver(onErrorDriveWith: .empty())
     }
@@ -79,6 +85,7 @@ private extension SettingsViewModel {
     func mode() -> Driver<TestMode> {
         let initial = profileManager
             .obtainTestMode()
+            .trackActivity(modeActivityIndicator)
             .compactMap { $0 }
             .asDriver(onErrorDriveWith: .empty())
         
@@ -98,6 +105,16 @@ private extension SettingsViewModel {
             .map { references -> SettingsTableSection? in
                 references.isEmpty ? nil : .references
             }
+            .trackActivity(referencesActivityIndicator)
             .asDriver(onErrorJustReturn: nil)
     }
+    
+    func makeActivityIndicator() -> Driver<Bool> {
+        Driver
+            .combineLatest(
+                courseActivityIndicator,
+                modeActivityIndicator,
+                referencesActivityIndicator
+            ) { $0 || $1 || $2 }
+        }
 }

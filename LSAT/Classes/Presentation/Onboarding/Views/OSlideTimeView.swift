@@ -6,8 +6,6 @@
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
 
 final class OSlideTimeView: OSlideView {
     lazy var titleLabel = makeTitleLabel()
@@ -29,15 +27,10 @@ final class OSlideTimeView: OSlideView {
                                     tag: 4)
     lazy var button = makeButton()
     
-    private lazy var disposeBag = DisposeBag()
-    
-    private lazy var profileManager = ProfileManagerCore()
-    
-    override init(step: OnboardingView.Step) {
-        super.init(step: step)
+    override init(step: OnboardingView.Step, scope: OnboardingScope) {
+        super.init(step: step, scope: scope)
         
         makeConstraints()
-        initialize()
         changeEnabled()
     }
     
@@ -56,41 +49,24 @@ final class OSlideTimeView: OSlideView {
 
 // MARK: Private
 private extension OSlideTimeView {
-    func initialize() {
-        button.rx.tap
-            .flatMapLatest { [weak self] _ -> Single<Bool> in
-                guard let self = self else {
-                    return .never()
-                }
-
-                guard let tag = [
-                    self.casualCell,
-                    self.regularCell,
-                    self.seriousCell,
-                    self.intenseCell
-                ]
-                .first(where: { $0.isSelected })?
-                .tag else {
-                    return .never()
-                }
-                
-                let time = tag * 5
-                
-                return self.profileManager
-                    .set(testMinutes: time)
-                    .map { true }
-                    .catchAndReturn(false)
-            }
-            .asDriver(onErrorDriveWith: .never())
-            .drive(onNext: { [weak self] success in
-                guard success else {
-                    Toast.notify(with: "Onboarding.FailedToSave".localized, style: .danger)
-                    return
-                }
-
-                self?.onNext()
-            })
-            .disposed(by: disposeBag)
+    @objc
+    func buttonTapped() {
+        guard let tag = [
+            self.casualCell,
+            self.regularCell,
+            self.seriousCell,
+            self.intenseCell
+        ]
+        .first(where: { $0.isSelected })?
+        .tag else {
+            return
+        }
+        
+        let time = tag * 5
+        
+        scope.testMinutes = time
+        
+        onNext()
     }
     
     @objc
@@ -214,6 +190,7 @@ private extension OSlideTimeView {
         view.backgroundColor = Appearance.mainColor
         view.layer.cornerRadius = 30.scale
         view.setAttributedTitle("Onboarding.Next".localized.attributed(with: attrs), for: .normal)
+        view.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         return view

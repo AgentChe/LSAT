@@ -11,7 +11,7 @@ import RxCocoa
 final class StudyCollectionView: UICollectionView {
     lazy var selected = PublishRelay<StudyCollectionElement>()
     
-    private lazy var sections = [StudyCollectionSection]()
+    lazy var sections = [StudyCollectionSection]()
     
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)

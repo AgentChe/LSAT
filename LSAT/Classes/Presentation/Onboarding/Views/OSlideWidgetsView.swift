@@ -13,8 +13,8 @@ final class OSlideWidgetsView: OSlideView {
     lazy var subtitleLabel = makeSubtitleLabel()
     lazy var button = makeButton()
     
-    override init(step: OnboardingView.Step) {
-        super.init(step: step)
+    override init(step: OnboardingView.Step, scope: OnboardingScope) {
+        super.init(step: step, scope: scope)
         
         makeConstraints()
     }

@@ -7,8 +7,16 @@
 
 import RxSwift
 
-final class QuestionManagerCore: QuestionManager {}
+final class QuestionManagerCore: QuestionManager {
+    enum Constants {
+        static let onboardingSetKey = "question_manager_core_onboarding_set_key"
+    }
+    
+    private let xorRequestWrapper = XORRequestWrapper()
+    private let defaultRequestWrapper = DefaultRequestWrapper()
+}
 
+// MARK: Public
 extension QuestionManagerCore {
     func retrieve(courseId: Int, testId: Int?, activeSubscription: Bool) -> Single<Test?> {
         guard let userToken = SessionManagerCore().getSession()?.userToken else {
@@ -22,8 +30,7 @@ extension QuestionManagerCore {
             activeSubscription: activeSubscription
         )
         
-        return SDKStorage.shared
-            .restApiTransport
+        return xorRequestWrapper
             .callServerStringApi(requestBody: request)
             .map(GetTestResponseMapper.map(from:))
     }
@@ -37,8 +44,7 @@ extension QuestionManagerCore {
                                        courseId: courseId,
                                        activeSubscription: activeSubscription)
         
-        return SDKStorage.shared
-            .restApiTransport
+        return xorRequestWrapper
             .callServerStringApi(requestBody: request)
             .map(GetTestResponseMapper.map(from:))
     }
@@ -52,8 +58,7 @@ extension QuestionManagerCore {
                                           courseId: courseId,
                                           activeSubscription: activeSubscription)
         
-        return SDKStorage.shared
-            .restApiTransport
+        return xorRequestWrapper
             .callServerStringApi(requestBody: request)
             .map(GetTestResponseMapper.map(from:))
     }
@@ -67,8 +72,7 @@ extension QuestionManagerCore {
                                      courseId: courseId,
                                      activeSubscription: activeSubscription)
         
-        return SDKStorage.shared
-            .restApiTransport
+        return xorRequestWrapper
             .callServerStringApi(requestBody: request)
             .map(GetTestResponseMapper.map(from:))
     }
@@ -82,10 +86,13 @@ extension QuestionManagerCore {
                                           courseId: courseId,
                                           activeSubscription: activeSubscription)
         
-        return SDKStorage.shared
-            .restApiTransport
+        return xorRequestWrapper
             .callServerStringApi(requestBody: request)
             .map(GetTestResponseMapper.map(from:))
+    }
+    
+    func retrieveOnboardingSet(forceUpdate: Bool) -> Single<Test?> {
+        forceUpdate ? downloadAndCacheOnboardingSet() : cachedOnboardingSet()
     }
     
     func sendAnswer(questionId: Int, userTestId: Int, answerIds: [Int]) -> Single<Bool?> {
@@ -100,8 +107,7 @@ extension QuestionManagerCore {
             answerIds: answerIds
         )
         
-        return SDKStorage.shared
-            .restApiTransport
+        return defaultRequestWrapper
             .callServerApi(requestBody: request)
             .map(SendAnswerResponseMapper.map(from:))
             .do(onSuccess: { isEndOfTest in
@@ -120,9 +126,47 @@ extension QuestionManagerCore {
         let request = GetTestConfigRequest(userToken: userToken,
                                                courseId: courseId)
         
-        return SDKStorage.shared
-            .restApiTransport
+        return xorRequestWrapper
             .callServerStringApi(requestBody: request)
             .map(GetTestConfigResponseMapper.from(response:))
+    }
+}
+
+// MARK: Private
+private extension QuestionManagerCore {
+    func downloadAndCacheOnboardingSet() -> Single<Test?> {
+        guard let userToken = SessionManagerCore().getSession()?.userToken else {
+            return .error(SignError.tokenNotFound)
+        }
+        
+        let request = GetOnboardingSetRequest(userToken: userToken)
+        
+        return xorRequestWrapper
+            .callServerStringApi(requestBody: request)
+            .map { try? GetTestResponseMapper.map(from: $0) }
+            .do(onSuccess: { test in
+                guard let test = test, let data = try? JSONEncoder().encode(test) else {
+                    return
+                }
+                
+                UserDefaults.standard.set(data, forKey: Constants.onboardingSetKey)
+            })
+    }
+    
+    func cachedOnboardingSet() -> Single<Test?> {
+        Single<Test?>
+            .create { event in
+                guard
+                    let data = UserDefaults.standard.data(forKey: Constants.onboardingSetKey),
+                    let test = try? JSONDecoder().decode(Test.self, from: data)
+                else {
+                    event(.success(nil))
+                    return Disposables.create()
+                }
+                
+                event(.success(test))
+                
+                return Disposables.create()
+            }
     }
 }

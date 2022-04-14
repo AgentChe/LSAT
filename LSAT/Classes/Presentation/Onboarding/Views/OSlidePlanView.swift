@@ -7,8 +7,12 @@
 
 import UIKit
 import Lottie
+import RxSwift
+import RxCocoa
 
 final class OSlidePlanView: OSlideView {
+    weak var vc: UIViewController?
+    
     lazy var titleLabel = makeTitleLabel()
     lazy var chartView = makeChartView()
     lazy var cell1 = makeCell(title: "Onboarding.SlidePlan.Cell1", image: "Onboarding.SlidePlan.Cell1")
@@ -17,10 +21,17 @@ final class OSlidePlanView: OSlideView {
     lazy var cell4 = makeCell(title: "Onboarding.SlidePlan.Cell4", image: "Onboarding.SlidePlan.Cell4")
     lazy var button = makeButton()
     
-    override init(step: OnboardingView.Step) {
-        super.init(step: step)
+    private lazy var profileManager = ProfileManagerCore()
+    
+    private lazy var disposeBag = DisposeBag()
+    
+    private lazy var tryAgainTrigger = PublishRelay<Void>()
+    
+    override init(step: OnboardingView.Step, scope: OnboardingScope) {
+        super.init(step: step, scope: scope)
         
         makeConstraints()
+        initialize()
     }
     
     required init?(coder: NSCoder) {
@@ -33,6 +44,48 @@ final class OSlidePlanView: OSlideView {
         SDKStorage.shared
             .amplitudeManager
             .logEvent(name: "Personal Plan Screen", parameters: [:])
+    }
+}
+
+// MARK: Private
+private extension OSlidePlanView {
+    func initialize() {
+        Observable.merge(button.rx.tap.asObservable(), tryAgainTrigger.asObservable())
+            .flatMapLatest { [weak self] _ -> Single<Bool> in
+                guard let self = self else {
+                    return .never()
+                }
+                
+                return self.profileManager
+                    .set(testMode: self.scope.testMode,
+                         examDate: self.scope.examDate,
+                         testMinutes: self.scope.testMinutes,
+                         testNumber: self.scope.testNumber,
+                         testWhen: self.scope.testWhen,
+                         notificationKey: self.scope.pushToken)
+                    .map { true }
+                    .catchAndReturn(false)
+            }
+            .asDriver(onErrorJustReturn: false)
+            .drive(onNext: { [weak self] success in
+                guard let self = self else {
+                    return
+                }
+                
+                success ? self.onNext() : self.openError()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func openError() {
+        let tryAgainVC = TryAgainViewController.make { [weak self] in
+            guard let self = self else {
+                return
+            }
+            
+            self.tryAgainTrigger.accept(Void())
+        }
+        vc?.present(tryAgainVC, animated: true)
     }
 }
 
@@ -134,7 +187,6 @@ private extension OSlidePlanView {
         view.backgroundColor = Appearance.mainColor
         view.layer.cornerRadius = 30.scale
         view.setAttributedTitle("Onboarding.SlidePlan.Button".localized.attributed(with: attrs), for: .normal)
-        view.addTarget(self, action: #selector(onNext), for: .touchUpInside)
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         return view

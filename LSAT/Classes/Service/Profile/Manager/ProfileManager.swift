@@ -20,4 +20,7 @@ protocol ProfileManager {
     
     // MARK: Test Mode
     func obtainTestMode() -> Single<TestMode?>
+    
+    func syncTokens(oldToken: String, newToken: String) -> Single<Void>
+    func login(userToken: String) -> Single<Void>
 }

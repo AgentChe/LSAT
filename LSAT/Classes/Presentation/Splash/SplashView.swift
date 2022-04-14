@@ -9,6 +9,8 @@ import UIKit
 
 final class SplashView: UIView {
     lazy var titleLabel = makeTitleLabel()
+    lazy var preloaderView = makePreloader()
+    lazy var preloaderLabel = makePreloaderLabel()
     lazy var imageView = makeImageView()
     
     override init(frame: CGRect) {
@@ -36,7 +38,19 @@ private extension SplashView {
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8.scale),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8.scale),
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: ScreenSize.isIphoneXFamily ? 183.scale : 60.scale)
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: ScreenSize.isIphoneXFamily ? 131.scale : 50.scale)
+        ])
+        
+        NSLayoutConstraint.activate([
+            preloaderView.widthAnchor.constraint(equalToConstant: 32.scale),
+            preloaderView.heightAnchor.constraint(equalToConstant: 32.scale),
+            preloaderView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            preloaderView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: ScreenSize.isIphoneXFamily ? 42.scale : 22.scale)
+        ])
+        
+        NSLayoutConstraint.activate([
+            preloaderLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            preloaderLabel.topAnchor.constraint(equalTo: preloaderView.bottomAnchor, constant: 12.scale)
         ])
         
         NSLayoutConstraint.activate([
@@ -52,7 +66,7 @@ private extension SplashView {
 private extension SplashView {
     func makeTitleLabel() -> UILabel {
         let attrs1 = TextAttributes()
-            .textColor(Appearance.progress3Color)
+            .textColor(Appearance.progress2Color)
             .font(Fonts.SFProRounded.bold(size: 40.scale))
             .lineHeight(48.scale)
             .textAlignment(.center)
@@ -71,6 +85,21 @@ private extension SplashView {
         let view = UILabel()
         view.numberOfLines = 0
         view.attributedText = string
+        view.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(view)
+        return view
+    }
+    
+    func makePreloader() -> Spinner {
+        let view = Spinner(size: CGSize(width: 32.scale, height: 32.scale))
+        view.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(view)
+        return view
+    }
+    
+    func makePreloaderLabel() -> UILabel {
+        let view = UILabel()
+        view.numberOfLines = 0
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         return view

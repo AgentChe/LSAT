@@ -11,6 +11,7 @@ final class TestView: UIView {
     lazy var closeButton = makeCloseButton()
     lazy var tableView = makeTableView()
     lazy var bottomView = makeBottomView()
+    lazy var activityView = makeActivityView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -53,11 +54,17 @@ private extension TestView {
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
         
-        
         NSLayoutConstraint.activate([
             bottomView.leadingAnchor.constraint(equalTo: leadingAnchor),
             bottomView.trailingAnchor.constraint(equalTo: trailingAnchor),
             bottomView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            activityView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            activityView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            activityView.widthAnchor.constraint(equalToConstant: 40.scale),
+            activityView.heightAnchor.constraint(equalToConstant: 40.scale)
         ])
     }
 }
@@ -95,6 +102,13 @@ private extension TestView {
     
     func makeBottomView() -> BottomView {
         let view = BottomView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(view)
+        return view
+    }
+    
+    func makeActivityView() -> Spinner {
+        let view = Spinner(size: CGSize(width: 32.scale, height: 32.scale))
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         return view

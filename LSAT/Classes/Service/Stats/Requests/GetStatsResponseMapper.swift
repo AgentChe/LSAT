@@ -6,13 +6,18 @@
 //
 
 struct GetStatsResponseMapper {
-    static func map(from response: Any) -> Stats? {
+    static func map(from response: Any) throws -> Stats? {
         guard
             let json = response as? [String: Any],
             let data = json["_data"] as? [String: Any],
-            let main = data["main"] as? [String: Any]
+            let main = data["main"] as? [String: Any],
+            let code = json["_code"] as? Int
         else {
-            return nil
+            throw ContentError(.notContent)
+        }
+        
+        guard code == 200 else {
+            throw ContentError(.notContent)
         }
         
         let courseStats = map(from: data["rest"] as? [[String: Any]] ?? [])

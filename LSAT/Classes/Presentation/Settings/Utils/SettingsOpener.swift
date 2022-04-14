@@ -19,7 +19,7 @@ final class SettingsOpener {
         let view = makeView(for: screen)
         let vc = makeVC(with: view)
 
-        view.didNextTapped = { _ in
+        view.didNextTapped = {
             vc.dismiss(animated: true)
         }
 
@@ -50,17 +50,17 @@ private extension SettingsOpener {
         return vc
     }
     
-    func makeView(for screen: Screen) -> OSlideView {
-        let view: OSlideView
+    func makeView(for screen: Screen) -> SSlideView {
+        let view: SSlideView
 
         switch screen {
         case .mode(let testMode):
-            let modeView = OSlideModesView(step: .modes)
+            let modeView = SSlideModesView()
             modeView.setup(mode: testMode)
             
             view = modeView
         case .references:
-            let referencesView = OSlideReferencesView(step: .references)
+            let referencesView = SSlideReferencesView()
             referencesView.moveToThis()
             
             view = referencesView

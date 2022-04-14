@@ -11,6 +11,7 @@ final class CoursesView: UIView {
     lazy var titleLabel = makeTitleLabel()
     lazy var collectionView = makeCollectionView()
     lazy var button = makeButton()
+    lazy var preloader = makePreloader()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,6 +22,19 @@ final class CoursesView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: Public
+extension CoursesView {
+    func buttonTitle(hidden: Bool) {
+        let attrs = TextAttributes()
+            .textColor(UIColor.white)
+            .font(Fonts.SFProRounded.semiBold(size: 20.scale))
+            .lineHeight(23.scale)
+            .textAlignment(.center)
+        let title = hidden ? "" : "Courses.Button".localized
+        button.setAttributedTitle(title.attributed(with: attrs), for: .normal)
     }
 }
 
@@ -52,6 +66,13 @@ private extension CoursesView {
             button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -26.scale),
             button.heightAnchor.constraint(equalToConstant: 60.scale),
             button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: ScreenSize.isIphoneXFamily ? -70.scale : -30.scale)
+        ])
+        
+        NSLayoutConstraint.activate([
+            preloader.widthAnchor.constraint(equalToConstant: 24.scale),
+            preloader.heightAnchor.constraint(equalToConstant: 24.scale),
+            preloader.centerXAnchor.constraint(equalTo: button.centerXAnchor),
+            preloader.centerYAnchor.constraint(equalTo: button.centerYAnchor)
         ])
     }
 }
@@ -87,16 +108,16 @@ private extension CoursesView {
     }
     
     func makeButton() -> UIButton {
-        let attrs = TextAttributes()
-            .textColor(UIColor.white)
-            .font(Fonts.SFProRounded.semiBold(size: 20.scale))
-            .lineHeight(23.scale)
-            .textAlignment(.center)
-        
         let view = UIButton()
         view.backgroundColor = Appearance.mainColor
         view.layer.cornerRadius = 30.scale
-        view.setAttributedTitle("Courses.Button".localized.attributed(with: attrs), for: .normal)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(view)
+        return view
+    }
+    
+    func makePreloader() -> Spinner {
+        let view = Spinner(size: CGSize(width: 24.scale, height: 24.scale), style: .white)
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         return view

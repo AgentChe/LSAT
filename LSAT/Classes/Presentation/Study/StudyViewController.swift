@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import RushSDK
 
 final class StudyViewController: UIViewController {
     lazy var mainView = StudyView()
@@ -54,6 +55,24 @@ final class StudyViewController: UIViewController {
                 let (element, activeSubscription) = stub
  
                 self?.selected(element: element, activeSubscription: activeSubscription)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.tryAgain = { [weak self] error -> Observable<Void> in
+            guard let self = self else {
+                return .never()
+            }
+            
+            return self.openError()
+        }
+        
+        viewModel.activityIndicator
+            .drive(onNext: { [weak self] activity in
+                guard let self = self else {
+                    return
+                }
+                
+                self.activity(activity)
             })
             .disposed(by: disposeBag)
     }
@@ -139,6 +158,30 @@ private extension StudyViewController {
     }
     
     func openPaygate() {
-        UIApplication.shared.keyWindow?.rootViewController?.present(PaygateViewController.make(), animated: true)
+        UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.present(PaygateViewController.make(), animated: true)
+    }
+    
+    func openError() -> Observable<Void> {
+        Observable<Void>
+            .create { [weak self] observe in
+                guard let self = self else {
+                    return Disposables.create()
+                }
+                
+                let vc = TryAgainViewController.make {
+                    observe.onNext(())
+                }
+                self.present(vc, animated: true)
+                
+                return Disposables.create()
+            }
+    }
+    
+    func activity(_ activity: Bool) {
+        let empty = mainView.collectionView.sections.isEmpty
+        
+        let inProgress = empty && activity
+        
+        inProgress ? mainView.preloader.startAnimating() : mainView.preloader.stopAnimating()
     }
 }

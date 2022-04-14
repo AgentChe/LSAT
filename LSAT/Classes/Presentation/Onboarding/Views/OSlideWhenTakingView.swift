@@ -6,8 +6,6 @@
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
 
 final class OSlideWhenTakingView: OSlideView {
     lazy var titleLabel = makeTitleLabel()
@@ -15,15 +13,10 @@ final class OSlideWhenTakingView: OSlideView {
     lazy var button = makeButton()
     lazy var skipButton = makeSkipButton()
     
-    private lazy var disposeBag = DisposeBag()
-    
-    private lazy var profileManager = ProfileManagerCore()
-    
-    override init(step: OnboardingView.Step) {
-        super.init(step: step)
+    override init(step: OnboardingView.Step, scope: OnboardingScope) {
+        super.init(step: step, scope: scope)
         
         makeConstraints()
-        initialize()
     }
     
     required init?(coder: NSCoder) {
@@ -41,35 +34,18 @@ final class OSlideWhenTakingView: OSlideView {
 
 // MARK: Private
 private extension OSlideWhenTakingView {
-    func initialize() {
-        button.rx.tap
-            .flatMapLatest { [weak self] _ -> Single<Bool> in
-                guard let self = self else {
-                    return .never()
-                }
-
-                let date = self.datePickerView.date
-                
-                let formatter = DateFormatter()
-                formatter.dateFormat = "dd.MM.yyyy"
-                
-                let examDate = formatter.string(from: date)
-                
-                return self.profileManager
-                    .set(examDate: examDate)
-                    .map { true }
-                    .catchAndReturn(false)
-            }
-            .asDriver(onErrorDriveWith: .never())
-            .drive(onNext: { [weak self] success in
-                guard success else {
-                    Toast.notify(with: "Onboarding.FailedToSave".localized, style: .danger)
-                    return
-                }
-
-                self?.onNext()
-            })
-            .disposed(by: disposeBag)
+    @objc
+    func buttonTapped() {
+        let date = self.datePickerView.date
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.yyyy"
+        
+        let examDate = formatter.string(from: date)
+        
+        scope.examDate = examDate
+        
+        onNext()
     }
 }
 
@@ -153,6 +129,7 @@ private extension OSlideWhenTakingView {
         view.backgroundColor = Appearance.mainColor
         view.layer.cornerRadius = 30.scale
         view.setAttributedTitle("Onboarding.Proceed".localized.attributed(with: attrs), for: .normal)
+        view.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         return view

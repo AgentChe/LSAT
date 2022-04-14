@@ -23,6 +23,10 @@
 "Splash.Title.Part1" = "Prepared by\n";
 "Splash.Title.Part2" = "CERTIFIED\n";
 "Splash.Title.Part3" = "experts";
+"Splash.Preloader1" = "Checking your account...";
+"Splash.Preloader2" = "Syncing the question bank...";
+"Splash.Preloader3" = "Setting up the onboarding...";
+"Splash.Preloader4" = "Setting up your account...";
 
 // MARK: Onboarding
 "Onboarding.FailedToSave" = "Failed to save";
@@ -35,7 +39,7 @@
 "Onboarding.Goals.Cell1" = "Pass the exam";
 "Onboarding.Goals.Cell2" = "Become a better specialist";
 "Onboarding.Goals.Cell3" = "Extend my knowledge";
-"Onboarding.Goals.Cell4" = "Resfresh the basics";
+"Onboarding.Goals.Cell4" = "Refresh the basics";
 "Onboarding.Goals.Cell5" = "Try something new";
 "Onboarding.WhenTaking.Title" = "WHEN ARE YOU TAKING THE EXAM?";
 "Onboarding.Time.Title" = "HOW MUCH TIME CAN\nYOU SPEND ON A TEST?";
@@ -170,3 +174,9 @@
 "Widgets.Medium.Description" = "Watch your pass rate progress and how many tests and questions you have taken";
 "Widgets.Large.Name" = "Full Stats";
 "Widgets.Large.Description" = "Watch your pass rate progress and how far are you from completing the question bank";
+
+// MARK: TryAgain
+"TryAgain.Title" = "The app failed to perform a\nrequest";
+"TryAgain.SubTitle" = "If there’s a connection issue on your side please try one more time. If the connection is fine and the error keeps on repeating please get in touch with the support";
+"TryAgain.Button" = "Try again";
+"TryAgain.Contact" = "Contact the support";

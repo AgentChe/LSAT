@@ -100,21 +100,21 @@ private extension AnswerView {
             backgroundColor = .white
             iconView.image = nil
         case .correct:
-            let correctColor = UIColor(integralRed: 46, green: 190, blue: 161)
+            let correctColor = Appearance.successColor
             layer.borderWidth = 3.scale
             layer.borderColor = correctColor.cgColor
             backgroundColor = correctColor.withAlphaComponent(0.15)
             iconView.tintColor = correctColor
             iconView.image = UIImage(named: "Question.Correct")
         case .error:
-            let errorColor = UIColor(integralRed: 254, green: 105, blue: 88)
+            let errorColor = Appearance.errorColor
             layer.borderWidth = 3.scale
             layer.borderColor = errorColor.cgColor
             backgroundColor = errorColor.withAlphaComponent(0.15)
             iconView.tintColor = errorColor
             iconView.image = UIImage(named: "Question.Error")
         case .warning:
-            let warningColor = UIColor(integralRed: 254, green: 168, blue: 88)
+            let warningColor = Appearance.warningColor
             layer.borderWidth = 3.scale
             layer.borderColor = warningColor.cgColor
             backgroundColor = warningColor.withAlphaComponent(0.15)

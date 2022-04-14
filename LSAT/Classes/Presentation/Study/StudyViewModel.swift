@@ -11,12 +11,17 @@ import RxCocoa
 final class StudyViewModel {
     private lazy var courseManager = CoursesManagerCore()
     private lazy var sessionManager = SessionManagerCore()
-    private lazy var questionManager = QuestionManagerCore()
     private lazy var statsManager = StatsManagerCore()
     
     lazy var sections = makeSections()
     lazy var activeSubscription = makeActiveSubscription()
     lazy var courseName = makeCourseName()
+    
+    lazy var activityIndicator = RxActivityIndicator()
+    
+    var tryAgain: ((Error) -> (Observable<Void>))?
+
+    private lazy var observableRetrySingle = ObservableRetrySingle()
 }
 
 // MARK: Private
@@ -55,14 +60,29 @@ private extension StudyViewModel {
         QuestionManagerMediator.shared.rxTestPassed
             .asObservable()
             .startWith(())
-            .flatMap { [weak self] _ -> Single<(Course, Brief?)> in
-                guard let this = self, let course = self?.courseManager.getSelectedCourse() else {
+            .flatMap { [weak self] _ -> Observable<(Course, Brief?)> in
+                guard let self = self, let course = self.courseManager.getSelectedCourse() else {
                     return .never()
                 }
                 
-                return this.statsManager
-                    .retrieveBrief(courseId: course.id)
-                    .map { (course, $0) }
+                func source() -> Single<(Course, Brief?)> {
+                    self.statsManager
+                        .retrieveBrief(courseId: course.id)
+                        .map { (course, $0) }
+                }
+                
+                func trigger(error: Error) -> Observable<Void> {
+                    guard let tryAgain = self.tryAgain?(error) else {
+                        return .empty()
+                    }
+                    
+                    return tryAgain
+                }
+                
+                return self.observableRetrySingle
+                    .retry(source: { source() },
+                           trigger: { trigger(error: $0) })
+                    .trackActivity(self.activityIndicator)
             }
             .map { stub -> StudyCollectionSection in
                 let (course, brief) = stub

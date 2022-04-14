@@ -11,6 +11,7 @@ final class StudyView: UIView {
     lazy var titleLabel = makeTitleLabel()
     lazy var settingsButton = makeSettingsButton()
     lazy var collectionView = makeCollectionView()
+    lazy var preloader = makePreloader()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -52,6 +53,13 @@ private extension StudyView {
             collectionView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5.scale),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+        
+        NSLayoutConstraint.activate([
+            preloader.centerXAnchor.constraint(equalTo: centerXAnchor),
+            preloader.centerYAnchor.constraint(equalTo: centerYAnchor),
+            preloader.widthAnchor.constraint(equalToConstant: 45.scale),
+            preloader.heightAnchor.constraint(equalToConstant: 45.scale)
+        ])
     }
 }
 
@@ -91,6 +99,13 @@ private extension StudyView {
         view.backgroundColor = UIColor.clear
         view.contentInset = UIEdgeInsets(top: 0, left: 16.scale, bottom: 0, right: 16.scale)
         view.showsVerticalScrollIndicator = false
+        view.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(view)
+        return view
+    }
+    
+    func makePreloader() -> Spinner {
+        let view = Spinner(size: CGSize(width: 45.scale, height: 45.scale))
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         return view

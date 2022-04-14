@@ -11,6 +11,7 @@ class BottomView: UIView {
     lazy var bottomButton = makeBottomButton()
     lazy var nextButton = makeNextButton()
     lazy var gradientView = makeGradientView()
+    lazy var preloader = makePreloader()
     
     private let gradientLayer = CAGradientLayer()
     
@@ -91,6 +92,13 @@ private extension BottomView {
             nextButton.topAnchor.constraint(equalTo: bottomButton.topAnchor),
             nextButton.bottomAnchor.constraint(equalTo: bottomButton.bottomAnchor)
         ])
+        
+        NSLayoutConstraint.activate([
+            preloader.leadingAnchor.constraint(equalTo: bottomButton.leadingAnchor),
+            preloader.trailingAnchor.constraint(equalTo: bottomButton.trailingAnchor),
+            preloader.topAnchor.constraint(equalTo: bottomButton.topAnchor),
+            preloader.bottomAnchor.constraint(equalTo: bottomButton.bottomAnchor)
+        ])
     }
 }
 
@@ -126,6 +134,16 @@ private extension BottomView {
         view.layer.mask = gradientLayer
         view.isUserInteractionEnabled = false
         view.backgroundColor = .white
+        view.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(view)
+        return view
+    }
+    
+    func makePreloader() -> TestBottomSpinner {
+        let view = TestBottomSpinner()
+        view.layer.cornerRadius = 30.scale
+        view.backgroundColor = Appearance.mainColor
+        view.stop()
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         return view

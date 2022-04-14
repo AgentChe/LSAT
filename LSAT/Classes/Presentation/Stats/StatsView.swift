@@ -10,6 +10,7 @@ import UIKit
 final class StatsView: UIView {
     lazy var tableView = makeTableView()
     lazy var titleLabel = makeTitleLabel()
+    lazy var preloader = makePreloader()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,6 +45,13 @@ private extension StatsView {
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.scale),
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+        
+        NSLayoutConstraint.activate([
+            preloader.centerXAnchor.constraint(equalTo: centerXAnchor),
+            preloader.centerYAnchor.constraint(equalTo: centerYAnchor),
+            preloader.widthAnchor.constraint(equalToConstant: 45.scale),
+            preloader.heightAnchor.constraint(equalToConstant: 45.scale)
+        ])
     }
 }
 
@@ -71,5 +79,11 @@ private extension StatsView {
         addSubview(view)
         return view
     }
+    
+    func makePreloader() -> Spinner {
+        let view = Spinner(size: CGSize(width: 45.scale, height: 45.scale))
+        view.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(view)
+        return view
+    }
 }
-

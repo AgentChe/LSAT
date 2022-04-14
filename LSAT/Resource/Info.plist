@@ -39,6 +39,8 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAppID</key>
 	<string>348002860237162</string>
+	<key>FacebookClientToken</key>
+	<string>5ebf7bbe44297415763310c4933e77a2</string>
 	<key>FacebookDisplayName</key>
 	<string>LSAT Exam</string>
 	<key>LSRequiresIPhoneOS</key>

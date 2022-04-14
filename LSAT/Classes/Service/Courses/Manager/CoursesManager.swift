@@ -12,7 +12,7 @@ protocol CoursesManager: AnyObject {
     func getSelectedCourse() -> Course?
     
     // MARK: API(Rx)
-    func retrieveCourses() -> Single<[Course]>
+    func retrieveCourses(forceUpdate: Bool) -> Single<[Course]>
     func rxSelect(course: Course) -> Single<Void>
     func retrieveSelectedCourse(forceUpdate: Bool) -> Single<Course?>
     

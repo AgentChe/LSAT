@@ -24,9 +24,9 @@ final class PaygateViewModel {
     let restoreProcessing = RxActivityIndicator()
     let retrieveCompleted = BehaviorRelay<Bool>(value: false)
     
-    private lazy var paygateManager = PaygateManagerCore()
+    private lazy var paygateManager = PaygateManager()
     private lazy var purchaseInteractor = SDKStorage.shared.purchaseInteractor
-    private lazy var monetizatiionManager = MonetizationManagerCore()
+    private lazy var monetizatiionManager = MonetizationManager()
 }
 
 // MARK: Monetization
@@ -49,7 +49,7 @@ extension PaygateViewModel {
 extension PaygateViewModel {
     func retrieve() -> Driver<(Paygate?, Bool)> {
         let paygate = paygateManager
-            .retrievePaygate()
+            .retrievePaygate(forceUpdate: false)
             .asDriver(onErrorJustReturn: nil)
         
         let prices = paygate

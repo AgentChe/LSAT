@@ -12,6 +12,8 @@ final class CoursesViewModel {
     lazy var selected = PublishRelay<CoursesCollectionElement>()
     lazy var store = PublishRelay<Void>()
     
+    lazy var activityIndicator = RxActivityIndicator()
+    
     private lazy var coursesManager = CoursesManagerCore()
     
     lazy var elements = makeElements()
@@ -27,7 +29,7 @@ private extension CoursesViewModel {
             .startWith(-1)
         
         let courses = coursesManager
-            .retrieveCourses()
+            .retrieveCourses(forceUpdate: false)
             .map {
                 $0.sorted(by: { $0.sort < $1.sort })
                 
@@ -46,12 +48,13 @@ private extension CoursesViewModel {
         store
             .withLatestFrom(selected)
             .flatMapLatest { [weak self] element -> Driver<Void> in
-                guard let this = self else {
+                guard let self = self else {
                     return .empty()
                 }
                 
-                return this.coursesManager
+                return self.coursesManager
                     .rxSelect(course: element.course)
+                    .trackActivity(self.activityIndicator)
                     .asDriver(onErrorDriveWith: .empty())
             }
             .asDriver(onErrorDriveWith: .empty())

@@ -7,11 +7,18 @@
 
 import UIKit
 import RxSwift
+import RushSDK
+
+protocol CoursesViewControllerDelegate: AnyObject {
+    func coursesViewControllerDismissed()
+}
 
 final class CoursesViewController: UIViewController {
     enum HowOpen {
         case root, present
     }
+    
+    weak var delegate: CoursesViewControllerDelegate?
     
     lazy var mainView = CoursesView()
     
@@ -66,6 +73,16 @@ final class CoursesViewController: UIViewController {
                 self?.goToNext()
             })
             .disposed(by: disposeBag)
+        
+        viewModel.activityIndicator
+            .drive(onNext: { [weak self] activity in
+                guard let self = self else {
+                    return
+                }
+                
+                self.activity(activity)
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -83,9 +100,15 @@ private extension CoursesViewController {
     func goToNext() {
         switch howOpen {
         case .root:
-            UIApplication.shared.keyWindow?.rootViewController = CourseViewController.make()
+            UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController = CourseViewController.make()
         case .present:
-            dismiss(animated: true)
+            dismiss(animated: true) { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                
+                self.delegate?.coursesViewControllerDismissed()
+            }
         }
     }
     
@@ -95,5 +118,11 @@ private extension CoursesViewController {
         SDKStorage.shared
             .amplitudeManager
             .logEvent(name: "Exam Tap", parameters: ["what":name])
+    }
+    
+    func activity(_ activity: Bool) {
+        activity ? mainView.preloader.startAnimating() : mainView.preloader.stopAnimating()
+        
+        mainView.buttonTitle(hidden: activity)
     }
 }

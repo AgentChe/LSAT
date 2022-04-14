@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import RushSDK
 
 final class SettingsViewController: UIViewController {
     lazy var mainView = SettingsView()
@@ -29,12 +30,26 @@ final class SettingsViewController: UIViewController {
         
         viewModel
             .sections
-            .drive(onNext: mainView.tableView.setup(sections:))
+            .drive(onNext: { [weak self] sections in
+                self?.mainView.tableView.setup(sections: sections)
+            })
             .disposed(by: disposeBag)
         
         mainView
             .tableView.tapped
-            .subscribe(onNext: tapped(_:))
+            .subscribe(onNext: { [weak self] value in
+                self?.tapped(value)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.activityIndicator
+            .drive(onNext: { [weak self] activity in
+                guard let self = self else {
+                    return
+                }
+                
+                self.activity(activity)
+            })
             .disposed(by: disposeBag)
     }
 }
@@ -51,13 +66,13 @@ private extension SettingsViewController {
     func tapped(_ tapped: SettingsTableView.Tapped) {
         switch tapped {
         case .unlock:
-            UIApplication.shared.keyWindow?.rootViewController?.present(PaygateViewController.make(), animated: true)
+            UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.present(PaygateViewController.make(), animated: true)
             
             SDKStorage.shared
                 .amplitudeManager
                 .logEvent(name: "Settings Tap", parameters: ["what": "unlock premium"])
         case .course:
-            UIApplication.shared.keyWindow?.rootViewController = CoursesViewController.make(howOpen: .root)
+            UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController = CoursesViewController.make(howOpen: .root)
             
             SDKStorage.shared
                 .amplitudeManager
@@ -89,7 +104,8 @@ private extension SettingsViewController {
         case .mode(let testMode):
             screenOpener.open(screen: .mode(testMode), from: self)
         case .references:
-            screenOpener.open(screen: .references, from: self)
+//            screenOpener.open(screen: .references, from: self)
+            break
         }
     }
     
@@ -99,5 +115,13 @@ private extension SettingsViewController {
         }
         
         UIApplication.shared.open(url, options: [:])
+    }
+    
+    func activity(_ activity: Bool) {
+        let empty = mainView.tableView.sections.isEmpty
+        
+        let inProgress = empty && activity
+        
+        inProgress ? mainView.preloader.startAnimating() : mainView.preloader.stopAnimating()
     }
 }

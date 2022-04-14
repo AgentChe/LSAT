@@ -6,16 +6,24 @@
 //
 
 final class GetTestModeResponseMapper {
-    static func map(from response: Any) -> TestMode? {
+    static func map(from response: Any) throws -> TestMode? {
         guard
             let json = response as? [String: Any],
             let data = json["_data"] as? [String: Any],
-            let code = data["test_mode"] as? Int
+            let code = json["_code"] as? Int
         else {
+            throw ContentError(.notContent)
+        }
+        
+        guard code == 200 else {
+            throw ContentError(.notContent)
+        }
+        
+        guard let testModeCode = data["test_mode"] as? Int else {
             return nil
         }
         
-        return map(testModeCode: code)
+        return map(testModeCode: testModeCode)
     }
     
     static func map(testModeCode: Int) -> TestMode? {

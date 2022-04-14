@@ -10,6 +10,7 @@ import UIKit
 final class SettingsView: UIView {
     lazy var titleLabel = makeTitleLabel()
     lazy var tableView = makeTableView()
+    lazy var preloader = makePreloader()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,6 +46,13 @@ private extension SettingsView {
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+        
+        NSLayoutConstraint.activate([
+            preloader.centerXAnchor.constraint(equalTo: centerXAnchor),
+            preloader.centerYAnchor.constraint(equalTo: centerYAnchor),
+            preloader.widthAnchor.constraint(equalToConstant: 45.scale),
+            preloader.heightAnchor.constraint(equalToConstant: 45.scale)
+        ])
     }
 }
 
@@ -70,6 +78,13 @@ private extension SettingsView {
         view.backgroundColor = UIColor.clear
         view.allowsSelection = false
         view.separatorStyle = .none
+        view.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(view)
+        return view
+    }
+    
+    func makePreloader() -> Spinner {
+        let view = Spinner(size: CGSize(width: 45.scale, height: 45.scale))
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         return view

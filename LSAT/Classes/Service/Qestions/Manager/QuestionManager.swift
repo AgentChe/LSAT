@@ -14,6 +14,7 @@ protocol QuestionManager: AnyObject {
     func retrieveFailedSet(courseId: Int, activeSubscription: Bool) -> Single<Test?>
     func retrieveQotd(courseId: Int, activeSubscription: Bool) -> Single<Test?>
     func retrieveRandomSet(courseId: Int, activeSubscription: Bool) -> Single<Test?>
+    func retrieveOnboardingSet(forceUpdate: Bool) -> Single<Test?>
     func sendAnswer(questionId: Int, userTestId: Int, answerIds: [Int]) -> Single<Bool?>
     func retrieveConfig(courseId: Int) -> Single<[TestConfig]>
 }

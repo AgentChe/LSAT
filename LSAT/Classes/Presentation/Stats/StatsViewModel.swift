@@ -14,6 +14,12 @@ final class StatsViewModel {
     
     lazy var courseName = makeCourseName()
     lazy var elements = makeElements()
+    
+    lazy var activityIndicator = RxActivityIndicator()
+    
+    var tryAgain: ((Error) -> (Observable<Void>))?
+
+    private lazy var observableRetrySingle = ObservableRetrySingle()
 }
 
 // MARK: Private
@@ -33,23 +39,38 @@ private extension StatsViewModel {
         return QuestionManagerMediator.shared.rxTestPassed
             .asObservable()
             .startWith(Void())
-            .flatMapLatest { [weak self] _ -> Single<[StatsCellType]> in
-                guard let this = self else {
+            .flatMapLatest { [weak self] _ -> Observable<Stats?> in
+                guard let self = self else {
                     return .never()
                 }
                 
-                return this.statsManager
-                    .retrieveStats(courseId: courseId)
-                    .map { stats -> [StatsCellType] in
-                        guard let stats = stats else { return [] }
-                        let passRate: StatsCellType = .passRate(stats.passRate)
-                        let main: StatsCellType = .main(.init(stats: stats))
-                        
-                        return stats
-                            .courseStats
-                            .reduce(into: [passRate, main]) {
-                                $0.append(.course(.init(courseStats: $1)))
-                            }
+                func source() -> Single<Stats?> {
+                    self.statsManager
+                        .retrieveStats(courseId: courseId)
+                }
+                
+                func trigger(error: Error) -> Observable<Void> {
+                    guard let tryAgain = self.tryAgain?(error) else {
+                        return .empty()
+                    }
+                    
+                    return tryAgain
+                }
+                
+                return self.observableRetrySingle
+                    .retry(source: { source() },
+                           trigger: { trigger(error: $0) })
+                    .trackActivity(self.activityIndicator)
+            }
+            .map { stats -> [StatsCellType] in
+                guard let stats = stats else { return [] }
+                let passRate: StatsCellType = .passRate(stats.passRate)
+                let main: StatsCellType = .main(.init(stats: stats))
+                
+                return stats
+                    .courseStats
+                    .reduce(into: [passRate, main]) {
+                        $0.append(.course(.init(courseStats: $1)))
                     }
             }
             .asDriver(onErrorJustReturn: [])
