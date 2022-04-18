@@ -9,7 +9,7 @@ import UIKit
 
 final class OnboardingView: UIView {
     enum Step: Int {
-        case welcome, references, whenTaking, goals, improve, modes, time, count, whenStudy, push, widgets, preloader, plan
+        case welcome, references, whenTaking, goals, modes, time, count, whenStudy, push, widgets, preloader, plan
     }
     
     var didFinish: (() -> Void)?
@@ -33,7 +33,6 @@ final class OnboardingView: UIView {
             OSlideReferencesView(step: .references, scope: scope),
             OSlideWhenTakingView(step: .whenTaking, scope: scope),
             OSlideGoalsView(step: .goals, scope: scope),
-            OSlideImproveView(step: .improve, scope: scope),
             OSlideModesView(step: .modes, scope: scope),
             OSlideTimeView(step: .time, scope: scope),
             OSlideCountView(step: .count, scope: scope),
@@ -60,7 +59,7 @@ final class OnboardingView: UIView {
     }
     
     private lazy var progressCases: [Step] = [
-        .whenTaking, .goals, .improve, .modes, .time, .count, .whenStudy
+        .whenTaking, .goals, .modes, .time, .count, .whenStudy
     ]
 }
 

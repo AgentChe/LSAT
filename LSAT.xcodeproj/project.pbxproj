@@ -256,7 +256,6 @@
 		DEC3090E280857D00069A060 /* OStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC30810280857CF0069A060 /* OStepView.swift */; };
 		DEC3090F280857D00069A060 /* OProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC30811280857CF0069A060 /* OProgressView.swift */; };
 		DEC30910280857D00069A060 /* OModeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC30812280857CF0069A060 /* OModeCell.swift */; };
-		DEC30911280857D00069A060 /* OImproveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC30813280857CF0069A060 /* OImproveCell.swift */; };
 		DEC30912280857D00069A060 /* ReferencesTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC30815280857CF0069A060 /* ReferencesTableCell.swift */; };
 		DEC30913280857D00069A060 /* ReferencesTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC30816280857CF0069A060 /* ReferencesTableView.swift */; };
 		DEC30914280857D00069A060 /* Onboarding.Chart.json in Resources */ = {isa = PBXBuildFile; fileRef = DEC30818280857CF0069A060 /* Onboarding.Chart.json */; };
@@ -270,7 +269,6 @@
 		DEC3091C280857D00069A060 /* OTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC30821280857CF0069A060 /* OTimeCell.swift */; };
 		DEC3091D280857D00069A060 /* OSlideReferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC30822280857CF0069A060 /* OSlideReferencesView.swift */; };
 		DEC3091E280857D00069A060 /* OPushView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC30823280857CF0069A060 /* OPushView.swift */; };
-		DEC3091F280857D00069A060 /* OSlideImproveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC30824280857CF0069A060 /* OSlideImproveView.swift */; };
 		DEC30920280857D00069A060 /* OSlideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC30825280857CF0069A060 /* OSlideView.swift */; };
 		DEC30921280857D00069A060 /* OSlideGoalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC30826280857CF0069A060 /* OSlideGoalsView.swift */; };
 		DEC30922280857D00069A060 /* OSlidePreloaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC30827280857CF0069A060 /* OSlidePreloaderView.swift */; };
@@ -568,7 +566,6 @@
 		DEC30810280857CF0069A060 /* OStepView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OStepView.swift; sourceTree = "<group>"; };
 		DEC30811280857CF0069A060 /* OProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OProgressView.swift; sourceTree = "<group>"; };
 		DEC30812280857CF0069A060 /* OModeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OModeCell.swift; sourceTree = "<group>"; };
-		DEC30813280857CF0069A060 /* OImproveCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OImproveCell.swift; sourceTree = "<group>"; };
 		DEC30815280857CF0069A060 /* ReferencesTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReferencesTableCell.swift; sourceTree = "<group>"; };
 		DEC30816280857CF0069A060 /* ReferencesTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReferencesTableView.swift; sourceTree = "<group>"; };
 		DEC30818280857CF0069A060 /* Onboarding.Chart.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Onboarding.Chart.json; sourceTree = "<group>"; };
@@ -582,7 +579,6 @@
 		DEC30821280857CF0069A060 /* OTimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTimeCell.swift; sourceTree = "<group>"; };
 		DEC30822280857CF0069A060 /* OSlideReferencesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSlideReferencesView.swift; sourceTree = "<group>"; };
 		DEC30823280857CF0069A060 /* OPushView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPushView.swift; sourceTree = "<group>"; };
-		DEC30824280857CF0069A060 /* OSlideImproveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSlideImproveView.swift; sourceTree = "<group>"; };
 		DEC30825280857CF0069A060 /* OSlideView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSlideView.swift; sourceTree = "<group>"; };
 		DEC30826280857CF0069A060 /* OSlideGoalsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSlideGoalsView.swift; sourceTree = "<group>"; };
 		DEC30827280857CF0069A060 /* OSlidePreloaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSlidePreloaderView.swift; sourceTree = "<group>"; };
@@ -1664,8 +1660,8 @@
 			isa = PBXGroup;
 			children = (
 				DEC3080A280857CF0069A060 /* Utils */,
-				DEC3080C280857CF0069A060 /* OnboardingViewController.swift */,
 				DEC3080D280857CF0069A060 /* Views */,
+				DEC3080C280857CF0069A060 /* OnboardingViewController.swift */,
 				DEC3082F280857CF0069A060 /* OnboardingView.swift */,
 				DEC30830280857CF0069A060 /* OnboardingViewModel.swift */,
 			);
@@ -1683,11 +1679,10 @@
 		DEC3080D280857CF0069A060 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				DEC3080E280857CF0069A060 /* OSlideWelcomeView.swift */,
 				DEC3080F280857CF0069A060 /* Atoms */,
+				DEC3080E280857CF0069A060 /* OSlideWelcomeView.swift */,
 				DEC30822280857CF0069A060 /* OSlideReferencesView.swift */,
 				DEC30823280857CF0069A060 /* OPushView.swift */,
-				DEC30824280857CF0069A060 /* OSlideImproveView.swift */,
 				DEC30825280857CF0069A060 /* OSlideView.swift */,
 				DEC30826280857CF0069A060 /* OSlideGoalsView.swift */,
 				DEC30827280857CF0069A060 /* OSlidePreloaderView.swift */,
@@ -1705,14 +1700,13 @@
 		DEC3080F280857CF0069A060 /* Atoms */ = {
 			isa = PBXGroup;
 			children = (
+				DEC30814280857CF0069A060 /* References */,
+				DEC30817280857CF0069A060 /* Source */,
+				DEC3081A280857CF0069A060 /* Welcome */,
 				DEC30810280857CF0069A060 /* OStepView.swift */,
 				DEC30811280857CF0069A060 /* OProgressView.swift */,
 				DEC30812280857CF0069A060 /* OModeCell.swift */,
-				DEC30813280857CF0069A060 /* OImproveCell.swift */,
-				DEC30814280857CF0069A060 /* References */,
-				DEC30817280857CF0069A060 /* Source */,
 				DEC30819280857CF0069A060 /* OWhenStudyCell.swift */,
-				DEC3081A280857CF0069A060 /* Welcome */,
 				DEC3081F280857CF0069A060 /* OSlidePlanCell.swift */,
 				DEC30820280857CF0069A060 /* OSlideGoalCell.swift */,
 				DEC30821280857CF0069A060 /* OTimeCell.swift */,
@@ -2092,7 +2086,6 @@
 				DEC308C7280857D00069A060 /* ExplanationTitleCell.swift in Sources */,
 				DEC308C0280857D00069A060 /* QuestionContentCell.swift in Sources */,
 				DEC308C5280857D00069A060 /* QuestionCell.swift in Sources */,
-				DEC3091F280857D00069A060 /* OSlideImproveView.swift in Sources */,
 				DEC30922280857D00069A060 /* OSlidePreloaderView.swift in Sources */,
 				DEC30876280857CF0069A060 /* QuestionManagerCore.swift in Sources */,
 				DEC308DC280857D00069A060 /* PaygateView.swift in Sources */,
@@ -2149,7 +2142,6 @@
 				DEC308BA280857D00069A060 /* StudyView.swift in Sources */,
 				DEC30838280857CF0069A060 /* GlobalDefinitions.swift in Sources */,
 				DEC3085A280857CF0069A060 /* MonetizationConfig.swift in Sources */,
-				DEC30911280857D00069A060 /* OImproveCell.swift in Sources */,
 				DEC308A4280857D00069A060 /* STModeCell.swift in Sources */,
 				DEC3090F280857D00069A060 /* OProgressView.swift in Sources */,
 				DEC308B9280857D00069A060 /* StudyCollectionView.swift in Sources */,
@@ -2359,7 +2351,7 @@
 				CODE_SIGN_ENTITLEMENTS = LSAT/LSAT.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = ZY9AXRCYBM;
 				INFOPLIST_FILE = "$(SRCROOT)/LSAT/Resource/Info.plist";
@@ -2368,7 +2360,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = exam.lsat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "LSAT Prod";
@@ -2388,7 +2380,7 @@
 				CODE_SIGN_ENTITLEMENTS = LSAT/LSAT.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = ZY9AXRCYBM;
 				INFOPLIST_FILE = "$(SRCROOT)/LSAT/Resource/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
@@ -2396,7 +2388,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = exam.lsat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "LSAT Prod";
@@ -2414,7 +2406,7 @@
 				CODE_SIGN_ENTITLEMENTS = StatsWidgetsExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = ZY9AXRCYBM;
 				INFOPLIST_FILE = StatsWidgets/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -2423,7 +2415,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = exam.lsat.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "LSAT Widget Prod";
@@ -2441,7 +2433,7 @@
 				CODE_SIGN_ENTITLEMENTS = StatsWidgetsExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = ZY9AXRCYBM;
 				INFOPLIST_FILE = StatsWidgets/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -2450,7 +2442,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = exam.lsat.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "LSAT Widget Prod";
