@@ -37,6 +37,14 @@ final class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        viewModel.tryAgain = { [weak self] error -> Observable<Void> in
+            guard let self = self else {
+                return .never()
+            }
+            
+            return self.openError()
+        }
+        
         sdkInitialize.initialize { [weak self] progress in
             guard let self = self else {
                 return
@@ -57,23 +65,11 @@ final class SplashViewController: UIViewController {
         }
         
         viewModel.step()
-            .drive(onNext: { [weak self] step in
-                guard let self = self else {
-                    return
-                }
-                
-                self.activity(state: step == .onboarding ? .prepareOnboarding : .none)
-                self.step(step)
+            .drive(Binder(self) { base, step in
+                base.activity(state: step == .onboarding ? .prepareOnboarding : .none)
+                base.step(step)
             })
             .disposed(by: disposeBag)
-        
-        viewModel.tryAgain = { [weak self] error -> Observable<Void> in
-            guard let self = self else {
-                return .never()
-            }
-            
-            return self.openError()
-        }
     }
 }
 
@@ -111,7 +107,7 @@ private extension SplashViewController {
             vc.delegate = self
             present(vc, animated: true)
         case .courses:
-            let vc = CoursesViewController.make(howOpen: .present)
+            let vc = CoursesViewController.make()
             vc.delegate = self
             present(vc, animated: true)
         }
@@ -121,7 +117,7 @@ private extension SplashViewController {
         state == .none ? mainView.preloaderView.stopAnimating() : mainView.preloaderView.startAnimating()
         
         let attrs = TextAttributes()
-            .textColor(UIColor(integralRed: 75, green: 81, blue: 102))
+            .textColor(Appearance.greyColor)
             .font(Fonts.SFProRounded.regular(size: 17.scale))
             .lineHeight(23.8.scale)
             .textAlignment(.center)

@@ -22,7 +22,7 @@ final class OWhenStudyCell: UIView {
     var title: String = "" {
         didSet {
             let attrs = TextAttributes()
-                .textColor(UIColor.black)
+                .textColor(Appearance.blackColor)
                 .font(Fonts.SFProRounded.regular(size: 20.scale))
                 .lineHeight(24.scale)
             titleLabel.attributedText = title.attributed(with: attrs)

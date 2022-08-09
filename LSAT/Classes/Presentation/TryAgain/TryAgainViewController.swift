@@ -52,12 +52,8 @@ final class TryAgainViewController: UIViewController {
             .disposed(by: disposeBag)
         
         mainView.contactButton.rx.tap
-            .subscribe(onNext: {
-                guard let url = URL(string: GlobalDefinitions.contactUsUrl) else {
-                    return
-                }
-                
-                UIApplication.shared.open(url, options: [:])
+            .bind(to: Binder(self) { base, void in
+                base.openContactUs()
             })
             .disposed(by: disposeBag)
     }
@@ -67,5 +63,22 @@ final class TryAgainViewController: UIViewController {
 extension TryAgainViewController {
     static func make(tryAgain: (() -> Void)? = nil) -> TryAgainViewController {
         TryAgainViewController(tryAgain: tryAgain)
+    }
+}
+
+// MARK: Private
+private extension TryAgainViewController {
+    func openContactUs() {
+        var parameters: [(String, String)]?
+        
+        if let userId = SessionManager().getSession()?.userId {
+            parameters = [("user_id", String(userId))]
+        }
+        
+        guard let url = URL(path: GlobalDefinitions.contactUsUrl, parameters: parameters ?? []) else {
+            return
+        }
+        
+        UIApplication.shared.open(url, options: [:])
     }
 }

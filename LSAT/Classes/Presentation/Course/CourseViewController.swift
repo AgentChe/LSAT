@@ -55,10 +55,15 @@ private extension CourseViewController {
         mainView.tabView.statsItem.isUserInteractionEnabled = true
         mainView.tabView.statsItem.addGestureRecognizer(statsGesture)
         
+        let reviewGesture = UITapGestureRecognizer()
+        mainView.tabView.reviewItem.isUserInteractionEnabled = true
+        mainView.tabView.reviewItem.addGestureRecognizer(reviewGesture)
+        
         Observable
             .merge([
                 studyGesture.rx.event.map { _ in TabView.Tab.study },
                 statsGesture.rx.event.map { _ in TabView.Tab.stats },
+                reviewGesture.rx.event.map { _ in TabView.Tab.review },
             ])
             .subscribe(onNext: { [weak self] tab in
                 self?.update(selectedTab: tab)

@@ -9,29 +9,26 @@ import Alamofire
 
 struct SetRequest: APIRequestBody {
     private let userToken: String
-    private let level: Int?
-    private let assetsPreferences: [Int]?
-    private let testMode: Int?
     private let examDate: String?
+    private let courseId: Int?
+    private let testMode: Int?
     private let testMinutes: Int?
     private let testNumber: Int?
     private let testWhen: [Int]?
     private let notificationKey: String?
     
     init(userToken: String,
-         level: Int? = nil,
-         assetsPreferences: [Int]? = nil,
-         testMode: Int? = nil,
          examDate: String? = nil,
+         courseId: Int? = nil,
+         testMode: Int? = nil,
          testMinutes: Int? = nil,
          testNumber: Int? = nil,
          testWhen: [Int]? = nil,
          notificationKey: String? = nil) {
         self.userToken = userToken
-        self.level = level
-        self.assetsPreferences = assetsPreferences
-        self.testMode = testMode
         self.examDate = examDate
+        self.courseId = courseId
+        self.testMode = testMode
         self.testMinutes = testMinutes
         self.testNumber = testNumber
         self.testWhen = testWhen
@@ -52,20 +49,16 @@ struct SetRequest: APIRequestBody {
             "_user_token": userToken
         ]
         
-        if let level = self.level {
-            params["level"] = level
+        if let examDate = self.examDate {
+            params["exam_date"] = examDate
         }
         
-        if let assetsPreferences = self.assetsPreferences {
-            params["assets_preferences"] = assetsPreferences
+        if let courseId = courseId {
+            params["current_application_course_id"] = courseId
         }
         
         if let testMode = self.testMode {
             params["test_mode"] = testMode
-        }
-        
-        if let examDate = self.examDate {
-            params["exam_date"] = examDate
         }
         
         if let testMinutes = self.testMinutes {

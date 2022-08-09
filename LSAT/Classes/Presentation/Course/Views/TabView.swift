@@ -9,11 +9,12 @@ import UIKit
 
 final class TabView: UIView {
     enum Tab {
-        case study, stats
+        case study, stats, review
     }
     
     lazy var studyItem = makeItem(image: "Course.Tab.Study", title: "Course.Tab.Study")
     lazy var statsItem = makeItem(image: "Course.Tab.Stats", title: "Course.Tab.Stats")
+    lazy var reviewItem = makeItem(image: "Course.Tab.Review", title: "Course.Tab.Review")
     
     var selectedTab = Tab.study {
         didSet {
@@ -35,20 +36,9 @@ final class TabView: UIView {
 // MARK: Private
 private extension TabView {
     func update() {
-        [
-            studyItem,
-            statsItem
-        ]
-        .forEach {
-            $0.state = .deselected
-        }
-        
-        switch selectedTab {
-        case .study:
-            studyItem.state = .selected
-        case .stats:
-            statsItem.state = .selected
-        }
+        studyItem.state = selectedTab == .study ? .selected : .deselected
+        statsItem.state = selectedTab == .stats ? .selected : .deselected
+        reviewItem.state = selectedTab == .review ? .selected : .deselected
     }
 }
 
@@ -66,7 +56,14 @@ private extension TabView {
             statsItem.leadingAnchor.constraint(equalTo: studyItem.trailingAnchor),
             statsItem.bottomAnchor.constraint(equalTo: bottomAnchor),
             statsItem.topAnchor.constraint(equalTo: topAnchor),
-            statsItem.trailingAnchor.constraint(equalTo: trailingAnchor)
+            statsItem.widthAnchor.constraint(equalTo: reviewItem.widthAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            reviewItem.leadingAnchor.constraint(equalTo: statsItem.trailingAnchor),
+            reviewItem.bottomAnchor.constraint(equalTo: bottomAnchor),
+            reviewItem.topAnchor.constraint(equalTo: topAnchor),
+            reviewItem.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }
 }

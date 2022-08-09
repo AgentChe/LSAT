@@ -325,7 +325,8 @@ private extension PaygateMainView {
     func makePreloaderView() -> UIActivityIndicatorView {
         let view = UIActivityIndicatorView()
         view.hidesWhenStopped = true
-        view.style = .gray
+        view.style = .medium
+        view.color = .gray
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         return view

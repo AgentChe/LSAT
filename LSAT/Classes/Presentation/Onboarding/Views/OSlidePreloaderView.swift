@@ -107,7 +107,7 @@ private extension OSlidePreloaderView {
 private extension OSlidePreloaderView {
     func makeTitleLabel() -> UILabel {
         let attrs = TextAttributes()
-            .textColor(UIColor.black)
+            .textColor(Appearance.blackColor)
             .font(Fonts.SFProRounded.bold(size: 25.scale))
             .lineHeight(29.scale)
             .textAlignment(.center)
@@ -125,7 +125,7 @@ private extension OSlidePreloaderView {
         view.numberOfLines = 0
         view.textAlignment = .center
         view.font = Fonts.SFProRounded.bold(size: 19.scale)
-        view.textColor = UIColor.black
+        view.textColor = Appearance.blackColor
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         return view
@@ -142,7 +142,7 @@ private extension OSlidePreloaderView {
         let view = UILabel()
         view.textAlignment = .center
         view.font = Fonts.SFProRounded.bold(size: 45.scale)
-        view.textColor = UIColor.black
+        view.textColor = Appearance.blackColor
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         return view

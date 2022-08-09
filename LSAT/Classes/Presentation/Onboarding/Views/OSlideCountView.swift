@@ -82,15 +82,15 @@ private extension OSlideCountView {
         
         NSLayoutConstraint.activate([
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            imageView.heightAnchor.constraint(equalToConstant: 285.scale),
+            imageView.heightAnchor.constraint(equalToConstant: 301.scale),
             imageView.topAnchor.constraint(equalTo: topAnchor, constant: ScreenSize.isIphoneXFamily ? 270.scale : 185.scale),
-            imageView.widthAnchor.constraint(equalToConstant: 225.scale)
+            imageView.widthAnchor.constraint(equalToConstant: 375.scale)
         ])
         
         NSLayoutConstraint.activate([
             slider.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32.scale),
             slider.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32.scale),
-            slider.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 63.scale)
+            slider.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: ScreenSize.isIphoneXFamily ? 63.scale : 30.scale)
         ])
         
         NSLayoutConstraint.activate([
@@ -106,7 +106,7 @@ private extension OSlideCountView {
 private extension OSlideCountView {
     func makeTitleLabel() -> UILabel {
         let attrs = TextAttributes()
-            .textColor(UIColor.black)
+            .textColor(Appearance.blackColor)
             .font(Fonts.SFProRounded.bold(size: 27.scale))
             .lineHeight(32.scale)
             .textAlignment(.center)
@@ -130,7 +130,7 @@ private extension OSlideCountView {
     
     func makeValueLabel() -> UILabel {
         let view = UILabel()
-        view.textColor = UIColor.black
+        view.textColor = Appearance.blackColor
         view.font = Fonts.SFProRounded.bold(size: 27.scale)
         addSubview(view)
         return view

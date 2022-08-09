@@ -21,7 +21,7 @@ final class OSlidePlanView: OSlideView {
     lazy var cell4 = makeCell(title: "Onboarding.SlidePlan.Cell4", image: "Onboarding.SlidePlan.Cell4")
     lazy var button = makeButton()
     
-    private lazy var profileManager = ProfileManagerCore()
+    private lazy var profileManager = ProfileManager()
     
     private lazy var disposeBag = DisposeBag()
     
@@ -57,8 +57,8 @@ private extension OSlidePlanView {
                 }
                 
                 return self.profileManager
-                    .set(testMode: self.scope.testMode,
-                         examDate: self.scope.examDate,
+                    .set(examDate: self.scope.examDate,
+                         testMode: self.scope.testMode,
                          testMinutes: self.scope.testMinutes,
                          testNumber: self.scope.testNumber,
                          testWhen: self.scope.testWhen,
@@ -142,7 +142,7 @@ private extension OSlidePlanView {
 private extension OSlidePlanView {
     func makeTitleLabel() -> UILabel {
         let attrs = TextAttributes()
-            .textColor(UIColor.black)
+            .textColor(Appearance.blackColor)
             .font(Fonts.SFProRounded.bold(size: 25.scale))
             .lineHeight(29.scale)
             .textAlignment(.center)

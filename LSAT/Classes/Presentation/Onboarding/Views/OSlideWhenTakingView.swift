@@ -38,12 +38,7 @@ private extension OSlideWhenTakingView {
     func buttonTapped() {
         let date = self.datePickerView.date
         
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd.MM.yyyy"
-        
-        let examDate = formatter.string(from: date)
-        
-        scope.examDate = examDate
+        scope.examDate = date
         
         onNext()
     }
@@ -84,7 +79,7 @@ private extension OSlideWhenTakingView {
 private extension OSlideWhenTakingView {
     func makeTitleLabel() -> UILabel {
         let attrs = TextAttributes()
-            .textColor(UIColor.black)
+            .textColor(Appearance.blackColor)
             .font(Fonts.SFProRounded.bold(size: 27.scale))
             .lineHeight(32.scale)
             .textAlignment(.center)
@@ -137,7 +132,7 @@ private extension OSlideWhenTakingView {
     
     func makeSkipButton() -> UIButton {
         let attrs = TextAttributes()
-            .textColor(UIColor.black)
+            .textColor(Appearance.blackColor)
             .font(Fonts.SFProRounded.regular(size: 20.scale))
             .textAlignment(.center)
         

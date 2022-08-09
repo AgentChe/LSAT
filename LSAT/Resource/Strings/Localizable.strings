@@ -1,8 +1,8 @@
 /*
   Localizable.strings
-  Accuplacer
+  ACMA
 
-  Created by Andrey Chernyshev on 19.04.2021.
+  Created by Андрей Чернышев on 04.07.2022.
   
 */
 
@@ -18,6 +18,7 @@
 // MARK: Course
 "Course.Tab.Stats" = "Stats";
 "Course.Tab.Study" = "Study";
+"Course.Tab.Review" = "Review";
 
 // MARK: Splash
 "Splash.Title.Part1" = "Prepared by\n";
@@ -57,9 +58,9 @@
 "Onboarding.SlidePreloader.Preloader2" = "Analyzing your study preferences...";
 "Onboarding.SlidePlan.Title" = "YOUR PERSONAL 98% PASS\nRATE STUDY PLAN";
 "Onboarding.SlidePlan.Cell1" = "Multiple sets of questions";
- "Onboarding.SlidePlan.Cell2" = "Consise explanation";
- "Onboarding.SlidePlan.Cell3" = "Different exam modes";
- "Onboarding.SlidePlan.Cell4" = "Reminders and notifications";
+  "Onboarding.SlidePlan.Cell2" = "Consise explanation";
+  "Onboarding.SlidePlan.Cell3" = "Different exam modes";
+  "Onboarding.SlidePlan.Cell4" = "Reminders and notifications";
 "Onboarding.SlidePlan.Button" = "Let’s go!";
 "Onboarding.Welcome.Title1" = "PERSONAL STUDY PLAN";
 "Onboarding.Welcome.Subtitle1" = "The question bank is divided into sets\naccording to your skills, requirements\nand settings";
@@ -106,18 +107,41 @@
 "Study.Mode.TenQuestions" = "10 Questions\nQuick Quiz";
 "Study.Mode.MissedQuestions" = "Missed\nQuestions Quiz";
 "Study.Mode.RandomSet" = "Random\nSet Quiz";
+"Study.Mode.Saved" = "Saved\nQuestions Quiz";
+"Study.Mode.Timed" = "Timed Quiz";
 
 // MARK: Settings
 "Settings.Title" = "Settings";
-"Settings.Unlock" = "Unlock";
-"Settings.Premium" = "PREMIUM";
-"Settings.SelectedExam" = "Selected Exam";
-"Settings.RateUs" = "Rate Us";
- "Settings.ContactUs" = "Contact Us";
- "Settings.TermsOfUse" = "Terms of Use";
-"Settings.PrivacyPolicy" = "Privacy Policy";
-"Settings.ExamMode" = "Exam mode";
-"Settings.References" = "References";
+"Settings.UnlockPremium.Title" = "Unlock";
+"Settings.UnlockPremium.SubTitle" = "PREMIUM";
+"Settings.Premium.Title" = "Premium";
+"Settings.Premium.MemberSince" = "Member since";
+"Settings.Premium.ValidTill" = "Valid till";
+"Settings.Premium.UserId" = "User ID";
+"Settings.Exam" = "Exam";
+"Settings.Exam.ExamDateTitle" = "Exam date";
+"Settings.Exam.ResetProgress" = "Reset progress";
+"Settings.Study" = "Study Settings";
+"Settings.Study.ExamMode" = "Exam mode";
+"Settings.Study.ExamMode.FullSupport" = "Full support";
+"Settings.Study.ExamMode.WithoutExplanations" = "Without explanations";
+"Settings.Study.ExamMode.ExamStyle" = "Exam-style";
+"Settings.Study.Vibration" = "Vibration";
+"Settings.Study.TextSize" = "Text size";
+"Settings.Community" = "Community";
+"Settings.Community.RateUs.Title" = "Rate us";
+"Settings.Community.RateUs.SubTitle" = "Your rating hepls us a lot";
+"Settings.Community.JoinTheCommunity.Title" = "Join the community";
+"Settings.Community.JoinTheCommunity.SubTitle" = "Connect with students on Facebook";
+"Settings.Community.ShareWithFriend.Title" = "Share with a friend";
+"Settings.Community.ShareWithFriend.SubTitle" = "Link to App Store";
+"Settings.Support" = "Support";
+"Settings.Support.ContactUs" = "Contact us";
+"Settings.Support.TermsOfUse" = "Terms of use";
+"Settings.Support.PrivacyPolicy" = "Privacy Policy";
+"Settings.ResetProgress.Title" = "Reset Progress?";
+"Settings.ResetProgress.SubTitle" = "This will remove your entire history. Are you\nsure you want to reset?";
+"Settings.ResetProgress.ResetButton" = "Reset";
 
 // MARK: Stats
 "Stats.PassRate.Title" = " Current pass rate";
@@ -151,6 +175,16 @@
 "Question.BackToStudying" = "Back to studying";
 "Question.QuestionProgress" = "Question %u/%u";
 "Question.NextQuestion" = "Next question";
+"Question.TodayTitle" = "Today’s question";
+"Question.QuitQuiz.Title" = "Quit Quiz?";
+"Question.QuitQuiz.SubTitle" = "You’ve answered only %i of %i questions.";
+"Question.QuitQuiz.QuitQuiz" = "Quit quiz";
+"Question.QuitQuiz.SubmitQuiz" = "Submit quiz";
+"Question.QuitQuiz.ContinueQuiz" = "Continue quiz";
+"Question.SubmitQuiz.Title" = "Submit quiz?";
+"Question.SubmitQuiz.SubTitle" = "You’ve answered only %i of %i questions.";
+"Question.SubmitQuiz.SubmitQuiz" = "Submit quiz";
+"Question.SubmitQuiz.ContinueQuiz" = "Continue quiz";
 
 // MARK: Test Stats
 "TestStats.Title" = "";
@@ -180,3 +214,66 @@
 "TryAgain.SubTitle" = "If there’s a connection issue on your side please try one more time. If the connection is fine and the error keeps on repeating please get in touch with the support";
 "TryAgain.Button" = "Try again";
 "TryAgain.Contact" = "Contact the support";
+
+// MARK: TextSize
+"TextSize.Title" = "Question 1/10";
+"TextSize.Question" = "What should the nurse’s immediate repose to manage an anxious client?";
+"TextSize.Answer1" = "Reduce environmental stimulation";
+"TextSize.Answer2" = "Use relaxation techniques";
+"TextSize.Answer3" = "Allow client to share his feelings";
+"TextSize.Answer4" = "Actively listen to the client";
+"TextSize.Percent" = "Text size - %i%%";
+
+// MARK: ReportOptions
+"ReportOptions.Title" = "Options";
+"ReportOptions.Report" = "Report question";
+"ReportOptions.Restart" = "Restart quiz";
+
+// MARK: ReportReason
+"ReportReason.Title" = "Report";
+"ReportReason.Reason1" = "Incorrect answer";
+"ReportReason.Reason2" = "I caught a typo";
+"ReportReason.Reason3" = "The question or answers are confusing";
+"ReportReason.Reason4" = "Something isn’t working or seems broken";
+
+// MARK: Report
+"Report.Title" = "Report";
+"Report.Message.Title" = "How can we help";
+"Report.Message.Placeholder" = "Please describe the issue in a little bit of detail";
+"Report.Feedback.Title" = "I need a feedback";
+"Report.Email" = "Email";
+"Report.Button" = "Report";
+"Report.Success" = "Your feedback has been sent. Thanks for improving the app!";
+
+// MARK: TimedQuizMinutes
+"TimedQuizMinutes.Title" = "Timed Quiz";
+"TimedQuizMinutes.SubTitle" = "Set time (in minutes)";
+"TimedQuizMinutes.StartButton" = "Start Test";
+
+// MARK: Review
+"Review.Title" = "Review";
+"Review.Filter.Quizes" = "Quizes";
+"Review.Filter.Questions" = "Questions";
+
+// MARK: Quizes
+"Quizes.Mode.Get" = "Questions";
+"Quizes.Mode.TodaysQuestion" = "Today’s Question";
+"Quizes.Mode.TenQuestions" = "10 Questions Quick Quiz";
+"Quizes.Mode.MissedQuestions" = "Missed Questions Quiz";
+"Quizes.Mode.RandomSet" = "Random Set Quiz";
+"Quizes.Mode.Saved" = "Saved Questions Quiz";
+"Quizes.Mode.Timed" = "Timed Quiz";
+"Quizes.YourTime" = "Your time - %@";
+"Quizes.AverageTime" = "Average time - %@";
+"Quizes.Empty" = "No finished tests yet";
+
+// MARK: Review Questions
+"ReviewQuestions.Filter.All" = "All";
+"ReviewQuestions.Filter.Correct" = "Correct";
+"ReviewQuestions.Filter.Incorrect" = "Incorrect";
+"ReviewQuestions.Empty" = "No answered questions yet";
+
+// MARK: TestViewer
+"TestViewer.Title" = "Questions";
+
+

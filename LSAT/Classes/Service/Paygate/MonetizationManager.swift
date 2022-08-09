@@ -22,7 +22,7 @@ final class MonetizationManager: MonetizationManagerProtocol {
 
 // MARK: Public
 extension MonetizationManager {
-    // С 42 (Nursing) билда монетизация всегда suggest
+    // С 42 билда монетизация всегда suggest
     func getMonetizationConfig() -> MonetizationConfig? {
         .suggest
 //        guard let rawValue = UserDefaults.standard.string(forKey: Constants.cachedMonetizationConfig) else {
@@ -32,7 +32,7 @@ extension MonetizationManager {
 //        return MonetizationConfig(rawValue: rawValue)
     }
     
-    // С 42 (Nursing) билда монетизация всегда suggest
+    // С 42 билда монетизация всегда suggest
     func rxRetrieveMonetizationConfig(forceUpdate: Bool) -> Single<MonetizationConfig?> {
         .deferred { .just(.suggest) }
 //        if forceUpdate {
@@ -52,7 +52,7 @@ extension MonetizationManager {
 // MARK: Private
 private extension MonetizationManager {
     func loadConfig() -> Single<MonetizationConfig?> {
-        let request = GetMonetizationConfigRequest(userToken: SessionManagerCore().getSession()?.userToken,
+        let request = GetMonetizationConfigRequest(userToken: SessionManager().getSession()?.userToken,
                                                    version: UIDevice.appVersion ?? "1",
                                                    appAnonymousId: SDKStorage.shared.applicationAnonymousID)
         

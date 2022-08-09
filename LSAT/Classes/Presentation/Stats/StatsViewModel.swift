@@ -9,44 +9,50 @@ import RxSwift
 import RxCocoa
 
 final class StatsViewModel {
-    private lazy var statsManager = StatsManagerCore()
-    private lazy var courseManager = CoursesManagerCore()
-    
     lazy var courseName = makeCourseName()
     lazy var elements = makeElements()
     
     lazy var activityIndicator = RxActivityIndicator()
     
     var tryAgain: ((Error) -> (Observable<Void>))?
-
+    
+    private lazy var course = makeCourse()
+    
+    private lazy var statsManager = StatsManager()
+    private lazy var profileManager = ProfileManager()
+    
     private lazy var observableRetrySingle = ObservableRetrySingle()
 }
 
 // MARK: Private
 private extension StatsViewModel {
     func makeCourseName() -> Driver<String> {
-        courseManager
-            .retrieveSelectedCourse()
+        course
             .compactMap { $0?.name }
             .asDriver(onErrorDriveWith: .empty())
     }
     
     func makeElements() -> Driver<[StatsCellType]> {
-        guard let courseId = courseManager.getSelectedCourse()?.id else {
-            return .just([])
-        }
+        let trigger = Signal
+            .merge(
+                QuestionMediator.shared.testPassed,
+                StatsMediator.shared.resetedStats
+            )
+            .asDriver(onErrorDriveWith: .never())
+            .startWith(())
         
-        return QuestionManagerMediator.shared.rxTestPassed
+        return Driver
+            .combineLatest(trigger, course) { $1 }
+            .compactMap { $0 }
             .asObservable()
-            .startWith(Void())
-            .flatMapLatest { [weak self] _ -> Observable<Stats?> in
+            .flatMapLatest { [weak self] course -> Observable<Stats?> in
                 guard let self = self else {
                     return .never()
                 }
                 
                 func source() -> Single<Stats?> {
                     self.statsManager
-                        .retrieveStats(courseId: courseId)
+                        .obtainStats(courseId: course.id)
                 }
                 
                 func trigger(error: Error) -> Observable<Void> {
@@ -74,5 +80,20 @@ private extension StatsViewModel {
                     }
             }
             .asDriver(onErrorJustReturn: [])
+    }
+    
+    func makeCourse() -> Driver<Course?> {
+        let initial = profileManager
+            .obtainSelectedCourse(forceUpdate: false)
+            .asDriver(onErrorJustReturn: nil)
+        
+        let updated = ProfileMediator.shared
+            .changedCourse
+            .map { course -> Course? in
+                course
+            }
+            .asDriver(onErrorJustReturn: nil)
+        
+        return Driver.merge(initial, updated)
     }
 }

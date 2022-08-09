@@ -15,8 +15,6 @@ protocol PaygateManagerProtocol {
 
 final class PaygateManager: PaygateManagerProtocol {
     private let defaultRequestWrapper = DefaultRequestWrapper()
-    
-    private let iapManager = SDKStorage.shared.iapManager
 }
 
 // MARK: Public
@@ -30,7 +28,8 @@ extension PaygateManager {
             return .deferred { .just(paygate) }
         }
         
-        return iapManager
+        return SDKStorage.shared
+            .iapManager
             .obtainProducts(ids: paygate.productsIds)
             .map { products -> [ProductPrice] in
                 products.map { ProductPrice(product: $0.product) }
@@ -43,7 +42,7 @@ extension PaygateManager {
 private extension PaygateManager {
     func downloadAndCachePaygate() -> Single<PaygateMapper.PaygateResponse?> {
         defaultRequestWrapper
-            .callServerApi(requestBody: GetPaygateRequest(userToken: SessionManagerCore().getSession()?.userToken,
+            .callServerApi(requestBody: GetPaygateRequest(userToken: SessionManager().getSession()?.userToken,
                                                           version: UIDevice.appVersion ?? "1"))
             .map { try PaygateMapper.parse(response: $0, productsPrices: nil) }
             .do(onSuccess: { data in

@@ -39,7 +39,7 @@ private extension OSlideGoalCell {
         leftInset = 20.scale
         rightInset = 20.scale
         
-        textColor = UIColor.black
+        textColor = Appearance.blackColor
         font = Fonts.SFProRounded.semiBold(size: 17.scale)
     }
     

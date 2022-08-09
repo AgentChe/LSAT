@@ -14,26 +14,21 @@ final class OnboardingViewModel {
         case paygateSuggest
         case nextScreen
     }
-    
-    private lazy var coursesManager = CoursesManagerCore()
-    private lazy var sessionManager = SessionManagerCore()
+
+    private lazy var sessionManager = SessionManager()
     private lazy var monetizationManager = MonetizationManager()
-    
-    var hasSelectedCourse: Bool {
-        coursesManager.getSelectedCourse() != nil
-    }
-    
+
     func whatNext() -> Step {
         let hasActiveSubscription = sessionManager.getSession()?.activeSubscription ?? false
-        
+
         if hasActiveSubscription {
             return .nextScreen
         }
-        
+
         guard let config = monetizationManager.getMonetizationConfig() else {
             return .nextScreen
         }
-        
+
         switch config {
         case .block:
             return .paygateBlock

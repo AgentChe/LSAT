@@ -1,11 +1,11 @@
 //
 //  ContentError.swift
-//  EMT
+//  Nursing
 //
-//  Created by Андрей Чернышев on 11.04.2022.
+//  Created by Андрей Чернышев on 31.03.2022.
 //
 
-struct ContentError: Error {
+public struct ContentError: Error {
     public enum Code {
         case notContent
     }
@@ -18,3 +18,4 @@ struct ContentError: Error {
         self.underlyingError = underlyingError
     }
 }
+

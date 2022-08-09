@@ -22,7 +22,7 @@ final class OModeCell: UIView {
     var title: String = "" {
         didSet {
             let attrs = TextAttributes()
-                .textColor(UIColor(integralRed: 19, green: 24, blue: 42))
+                .textColor(Appearance.blackColor)
                 .font(Fonts.SFProRounded.semiBold(size: 20.scale))
                 .lineHeight(28.scale)
             titleLabel.attributedText = title.attributed(with: attrs)
@@ -32,7 +32,7 @@ final class OModeCell: UIView {
     var subtitle: String = "" {
         didSet {
             let attrs = TextAttributes()
-                .textColor(UIColor(integralRed: 75, green: 81, blue: 102))
+                .textColor(Appearance.greyColor)
                 .font(Fonts.SFProRounded.regular(size: 15.scale))
                 .lineHeight(21.scale)
             subtitleLabel.attributedText = subtitle.attributed(with: attrs)

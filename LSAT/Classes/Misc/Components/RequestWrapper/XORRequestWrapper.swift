@@ -1,8 +1,8 @@
 //
 //  XORRequestWrapper.swift
-//  CSCS
+//  Nursing
 //
-//  Created by Андрей Чернышев on 16.03.2022.
+//  Created by Андрей Чернышев on 14.03.2022.
 //
 
 import RxSwift

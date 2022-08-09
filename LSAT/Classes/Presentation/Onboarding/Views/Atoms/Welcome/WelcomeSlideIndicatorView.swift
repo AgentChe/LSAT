@@ -47,9 +47,9 @@ private extension WelcomeSlideIndicatorView {
     }
     
     func update() {
-        indicator1View.backgroundColor = Appearance.progress3Color.withAlphaComponent(index == 1 ? 1 : 0.2)
-        indicator2View.backgroundColor = Appearance.progress3Color.withAlphaComponent(index == 2 ? 1 : 0.2)
-        indicator3View.backgroundColor = Appearance.progress3Color.withAlphaComponent(index == 3 ? 1 : 0.2)
+        indicator1View.backgroundColor = Appearance.mainColor.withAlphaComponent(index == 1 ? 1 : 0.2)
+        indicator2View.backgroundColor = Appearance.mainColor.withAlphaComponent(index == 2 ? 1 : 0.2)
+        indicator3View.backgroundColor = Appearance.mainColor.withAlphaComponent(index == 3 ? 1 : 0.2)
     }
 }
 

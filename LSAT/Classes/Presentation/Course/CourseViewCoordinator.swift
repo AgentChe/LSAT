@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import RushSDK
 
 final class CourseViewCoordinator {
     weak var parentVC: CourseViewController?
     
     lazy var studyVC = NursingNavigationController(rootViewController: StudyViewController.make())
     lazy var statsVC = NursingNavigationController(rootViewController: StatsViewController.make())
+    lazy var reviewVC = NursingNavigationController(rootViewController: ReviewViewController.make())
     
     private var previousVC: UIViewController?
     
@@ -26,17 +28,22 @@ final class CourseViewCoordinator {
 
             changeVC(on: studyVC)
             
-            SDKStorage.shared
-                .amplitudeManager
+            SDKStorage.shared.amplitudeManager
                 .logEvent(name: "Tab Bar Tap", parameters: ["what": "study"])
         case .stats:
             parentVC?.mainView.tabView.selectedTab = tab
             
             changeVC(on: statsVC)
             
-            SDKStorage.shared
-                .amplitudeManager
+            SDKStorage.shared.amplitudeManager
                 .logEvent(name: "Tab Bar Tap", parameters: ["what": "stats"])
+        case .review:
+            parentVC?.mainView.tabView.selectedTab = tab
+            
+            changeVC(on: reviewVC)
+            
+            SDKStorage.shared.amplitudeManager
+                .logEvent(name: "Tab Bar Tap", parameters: ["what": "review"])
         }
     }
 }

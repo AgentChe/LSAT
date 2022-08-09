@@ -21,7 +21,4 @@ enum ScreenSize {
     static let isIphoneX = (isIphone && maxLength == 812.0)
     static let isIphoneXMax = (isIphone && maxLength == 896.0)
     static let isIphoneXFamily = (isIphone && maxLength / minLength > 2.0)
-    
-    static let statusBarSize = UIApplication.shared.statusBarFrame.size
-    static let statusBarHeight = statusBarSize.height
 }

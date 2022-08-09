@@ -76,7 +76,7 @@ private extension OSlideWidgetsView {
     
     func makeTitleLabel() -> UILabel {
         let attrs = TextAttributes()
-            .textColor(UIColor(integralRed: 19, green: 24, blue: 42))
+            .textColor(Appearance.blackColor)
             .font(Fonts.SFProRounded.bold(size: 30.scale))
             .lineHeight(35.scale)
             .textAlignment(.center)
@@ -91,7 +91,7 @@ private extension OSlideWidgetsView {
     
     func makeSubtitleLabel() -> UILabel {
         let attrs = TextAttributes()
-            .textColor(UIColor(integralRed: 75, green: 81, blue: 102))
+            .textColor(Appearance.greyColor)
             .font(Fonts.SFProRounded.semiBold(size: 20.scale))
             .lineHeight(28.scale)
             .textAlignment(.center)

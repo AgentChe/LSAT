@@ -67,7 +67,7 @@ private extension OStepView {
     
     func fillViews() {
         views.forEach {
-            $0.backgroundColor = Appearance.progress3Color.withAlphaComponent(0.1)
+            $0.backgroundColor = Appearance.greyColor.withAlphaComponent(0.1)
         }
         
         views.prefix(step).forEach {

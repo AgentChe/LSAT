@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class TapAreaButton: UIButton {
+class TapAreaButton: UIButton {
     var dx: CGFloat = -10.scale
     var dy: CGFloat = -10.scale
     

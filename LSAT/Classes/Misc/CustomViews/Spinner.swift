@@ -1,15 +1,15 @@
 //
 //  Spinner.swift
-//  EMT
+//  Nursing
 //
-//  Created by Андрей Чернышев on 11.04.2022.
+//  Created by Андрей Чернышев on 04.04.2022.
 //
 
 import UIKit
 
 final class Spinner: UIView {
     enum Style {
-        case main, white
+        case blue, white
     }
     
     private let animationKey = "spinner_rotation_key"
@@ -28,7 +28,7 @@ final class Spinner: UIView {
     private let size: CGSize
     private let style: Style
     
-    init(size: CGSize, style: Style = .main) {
+    init(size: CGSize, style: Style = .blue) {
         self.size = size
         self.style = style
         
@@ -48,6 +48,10 @@ final class Spinner: UIView {
             stopAnimating()
             startAnimating()
         }
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        size
     }
 }
 
@@ -87,7 +91,7 @@ private extension Spinner {
     
     func imageName() -> String {
         switch style {
-        case .main:
+        case .blue:
             return "Spinner.Main"
         case .white:
             return "Spinner.White"

@@ -1,8 +1,8 @@
 //
-//  ObservableRetrySingle.swift
-//  EMT
+//  SingleExtension.swift
+//  Nursing
 //
-//  Created by Андрей Чернышев on 11.04.2022.
+//  Created by Андрей Чернышев on 05.04.2022.
 //
 
 import RxSwift

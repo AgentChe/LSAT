@@ -18,18 +18,17 @@ final class SplashViewModel {
     
     var tryAgain: ((Error) -> (Observable<Void>))?
     
-    private lazy var coursesManager = CoursesManagerCore()
+    private lazy var coursesManager = CoursesManager()
     private lazy var monetizationManager = MonetizationManager()
-    private lazy var sessionManager = SessionManagerCore()
-    private lazy var profileManager = ProfileManagerCore()
+    private lazy var sessionManager = SessionManager()
+    private lazy var profileManager = ProfileManager()
     private lazy var paygateManager = PaygateManager()
-    private lazy var questionManager = QuestionManagerCore()
     
     private lazy var observableRetrySingle = ObservableRetrySingle()
     
     func step() -> Driver<Step> {
         let initial = validationComplete
-            .flatMapLatest { [weak self] _ -> Observable<Void> in
+            .flatMap { [weak self] _ -> Observable<Void> in
                 guard let self = self else {
                     return .never()
                 }
@@ -75,7 +74,10 @@ private extension SplashViewModel {
                         .retrieveCourses(forceUpdate: true),
                     
                     paygateManager
-                        .retrievePaygate(forceUpdate: true)
+                        .retrievePaygate(forceUpdate: true),
+                    
+                    profileManager
+                        .obtainProfile(forceUpdate: true)
                 )
                 .map { _ in Void() }
         }
@@ -95,8 +97,8 @@ private extension SplashViewModel {
     
     func makeInitialStep() -> Observable<Step> {
         func source() -> Single<Step> {
-            coursesManager
-                .retrieveSelectedCourse(forceUpdate: true)
+            profileManager
+                .obtainSelectedCourse(forceUpdate: false)
                 .map { [weak self] selectedCourse -> Step in
                     guard let self = self else {
                         return .onboarding
