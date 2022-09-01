@@ -22,8 +22,9 @@ struct ResetStatsRequest: APIRequestBody {
     var parameters: Parameters? {
         [
             "_api_key": GlobalDefinitions.apiKey,
-            "user_token": userToken,
-            "course_id": courseId
+            "_user_token": userToken,
+            "course_id": courseId,
+            "platform": 1
         ]
     }
 }

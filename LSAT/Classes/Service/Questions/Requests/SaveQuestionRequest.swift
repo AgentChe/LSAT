@@ -28,7 +28,8 @@ struct SaveQuestionRequest: APIRequestBody {
          [
             "_api_key": GlobalDefinitions.apiKey,
             "_user_token": userToken,
-            "question_id": questionId
+            "question_id": questionId,
+            "platform": 1
         ]
     }
 }

@@ -22,7 +22,8 @@ struct GetOnboardingSetRequest: APIRequestBody {
          [
             "_api_key": GlobalDefinitions.apiKey,
             "_user_token": userToken,
-            "course_id": 1
+            "course_id": 1,
+            "platform": 1
         ]
     }
 }

@@ -27,7 +27,8 @@ struct GetTestStatsRequest: APIRequestBody {
             "_user_token": userToken,
             "course_id": courseId,
             "user_test_id": userTestId,
-            "peek": peek
+            "peek": peek,
+            "platform": 1
         ]
     }
 }

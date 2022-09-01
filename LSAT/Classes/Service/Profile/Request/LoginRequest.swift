@@ -21,7 +21,8 @@ struct LoginRequest: APIRequestBody {
     var parameters: Parameters? {
         [
             "_api_key": GlobalDefinitions.apiKey,
-            "user_token": userToken
+            "user_token": userToken,
+            "platform": 1
         ]
     }
 }

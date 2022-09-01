@@ -29,7 +29,8 @@ struct ReportRequest: APIRequestBody {
             "_user_token": userToken,
             "test_question_id": questionId,
             "reason": reason,
-            "comment": comment
+            "comment": comment,
+            "platform": 1
         ]
         
         if let userId = userId {

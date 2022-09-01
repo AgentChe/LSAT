@@ -46,7 +46,8 @@ struct SetRequest: APIRequestBody {
     var parameters: Parameters? {
         var params: [String: Any] = [
             "_api_key": GlobalDefinitions.apiKey,
-            "_user_token": userToken
+            "_user_token": userToken,
+            "platform": 1
         ]
         
         if let examDate = self.examDate {

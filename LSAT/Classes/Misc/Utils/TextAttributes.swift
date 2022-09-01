@@ -61,9 +61,7 @@ struct TextAttributes {
         }
 
         if let spacingIncrease = copy.font.map({ lineHeight - $0.lineHeight }), spacingIncrease > 0 {
-            copy.paragraphStyle?.paragraphSpacingBefore = spacingIncrease / 2
             copy.paragraphStyle?.lineSpacing = spacingIncrease
-            copy.paragraphStyle?.paragraphSpacing = spacingIncrease / 2
         } else {
             copy.paragraphStyle?.minimumLineHeight = lineHeight
             copy.paragraphStyle?.maximumLineHeight = lineHeight

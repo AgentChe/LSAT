@@ -29,7 +29,8 @@ struct GetPaygateRequest: APIRequestBody {
         var params: [String: Any] = [
             "_api_key": GlobalDefinitions.apiKey,
             "version": version,
-            "anonymous_id": SDKStorage.shared.applicationAnonymousID
+            "anonymous_id": SDKStorage.shared.applicationAnonymousID,
+            "platform": 1
         ]
         
         if let userToken = userToken {

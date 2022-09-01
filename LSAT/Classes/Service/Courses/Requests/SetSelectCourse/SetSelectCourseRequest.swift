@@ -23,7 +23,8 @@ struct SetSelectCourseRequest: APIRequestBody {
         [
             "_api_key": GlobalDefinitions.apiKey,
             "_user_token": userToken,
-            "current_application_course_id": courseId
+            "current_application_course_id": courseId,
+            "platform": 1
         ]
     }
 }

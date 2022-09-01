@@ -18,7 +18,8 @@ struct GetReferencesRequest: APIRequestBody {
     
     var parameters: Parameters? {
         [
-            "_api_key": GlobalDefinitions.apiKey
+            "_api_key": GlobalDefinitions.apiKey,
+            "platform": 1
         ]
     }
 }

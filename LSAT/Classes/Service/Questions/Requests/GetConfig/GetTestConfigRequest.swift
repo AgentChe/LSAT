@@ -29,7 +29,8 @@ struct GetTestConfigRequest: APIRequestBody {
         [
             "_api_key": GlobalDefinitions.apiKey,
             "_user_token": userToken,
-            "course_id": courseId
+            "course_id": courseId,
+            "platform": 1
         ]
     }
 }

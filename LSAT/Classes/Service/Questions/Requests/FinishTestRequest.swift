@@ -28,7 +28,8 @@ struct FinishTestRequest: APIRequestBody {
          [
             "_api_key": GlobalDefinitions.apiKey,
             "_user_token": userToken,
-            "user_test_id": userTestId
+            "user_test_id": userTestId,
+            "platform": 1
         ]
     }
 }
