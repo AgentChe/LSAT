@@ -10,7 +10,7 @@ import Alamofire
 struct ReportRequest: APIRequestBody {
     let userToken: String
     let questionId: Int
-    let userId: Int?
+    let userId: String?
     let reason: Int
     let email: String?
     let comment: String

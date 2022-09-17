@@ -333,7 +333,6 @@
 		DE06966328A2A13400BF8238 /* OModeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06951A28A2A13400BF8238 /* OModeCell.swift */; };
 		DE06966528A2A13400BF8238 /* ReferencesTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06951D28A2A13400BF8238 /* ReferencesTableCell.swift */; };
 		DE06966628A2A13400BF8238 /* ReferencesTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06951E28A2A13400BF8238 /* ReferencesTableView.swift */; };
-		DE06966728A2A13400BF8238 /* Onboarding.Chart.json in Resources */ = {isa = PBXBuildFile; fileRef = DE06952028A2A13400BF8238 /* Onboarding.Chart.json */; };
 		DE06966828A2A13400BF8238 /* OWhenStudyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06952128A2A13400BF8238 /* OWhenStudyCell.swift */; };
 		DE06966928A2A13400BF8238 /* WelcomeSlide1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06952328A2A13400BF8238 /* WelcomeSlide1View.swift */; };
 		DE06966A28A2A13400BF8238 /* WelcomeSlideIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06952428A2A13400BF8238 /* WelcomeSlideIndicatorView.swift */; };
@@ -361,6 +360,7 @@
 		DE06968128A2A14D00BF8238 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0693DC28A2A13400BF8238 /* Stats.swift */; };
 		DE06968228A2A15000BF8238 /* StatsShareManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0693EF28A2A13400BF8238 /* StatsShareManager.swift */; };
 		DE06968428A2A17100BF8238 /* SF-Pro-Rounded-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = DE06968328A2A16A00BF8238 /* SF-Pro-Rounded-Black.otf */; };
+		DE4FA13628D6559A00085483 /* Onboarding.Chart.json in Resources */ = {isa = PBXBuildFile; fileRef = DE4FA13528D6559A00085483 /* Onboarding.Chart.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -719,7 +719,6 @@
 		DE06951A28A2A13400BF8238 /* OModeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OModeCell.swift; sourceTree = "<group>"; };
 		DE06951D28A2A13400BF8238 /* ReferencesTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReferencesTableCell.swift; sourceTree = "<group>"; };
 		DE06951E28A2A13400BF8238 /* ReferencesTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReferencesTableView.swift; sourceTree = "<group>"; };
-		DE06952028A2A13400BF8238 /* Onboarding.Chart.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Onboarding.Chart.json; sourceTree = "<group>"; };
 		DE06952128A2A13400BF8238 /* OWhenStudyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OWhenStudyCell.swift; sourceTree = "<group>"; };
 		DE06952328A2A13400BF8238 /* WelcomeSlide1View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeSlide1View.swift; sourceTree = "<group>"; };
 		DE06952428A2A13400BF8238 /* WelcomeSlideIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeSlideIndicatorView.swift; sourceTree = "<group>"; };
@@ -743,6 +742,7 @@
 		DE06953728A2A13400BF8238 /* OnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		DE06953828A2A13400BF8238 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		DE06968328A2A16A00BF8238 /* SF-Pro-Rounded-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Black.otf"; sourceTree = "<group>"; };
+		DE4FA13528D6559A00085483 /* Onboarding.Chart.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Onboarding.Chart.json; sourceTree = "<group>"; };
 		E4BA7CA262777FBF5247AF84 /* Pods_LSAT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LSAT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF482D6AE6E33AB6E8387A91 /* Pods-LSAT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LSAT.release.xcconfig"; path = "Target Support Files/Pods-LSAT/Pods-LSAT.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2258,7 +2258,7 @@
 		DE06951F28A2A13400BF8238 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				DE06952028A2A13400BF8238 /* Onboarding.Chart.json */,
+				DE4FA13528D6559A00085483 /* Onboarding.Chart.json */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -2368,12 +2368,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE06968428A2A17100BF8238 /* SF-Pro-Rounded-Black.otf in Resources */,
-				DE06966728A2A13400BF8238 /* Onboarding.Chart.json in Resources */,
 				96BF1F9526AAB91000AEF6D3 /* LaunchScreen.storyboard in Resources */,
 				96BF1FBD26AAB96800AEF6D3 /* GoogleService-Info.plist in Resources */,
 				96BF1F9626AAB91000AEF6D3 /* Localizable.strings in Resources */,
 				96BF1D5526AAA83C00AEF6D3 /* Assets.xcassets in Resources */,
 				96BF1F9C26AAB92B00AEF6D3 /* SF-Pro-Rounded-Semibold.otf in Resources */,
+				DE4FA13628D6559A00085483 /* Onboarding.Chart.json in Resources */,
 				96BF1F9E26AAB92B00AEF6D3 /* SF-Pro-Rounded-Bold.otf in Resources */,
 				96BF1F9D26AAB92B00AEF6D3 /* SF-Pro-Rounded-Regular.otf in Resources */,
 			);
@@ -2959,7 +2959,7 @@
 				CODE_SIGN_ENTITLEMENTS = LSAT/LSAT.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = ZY9AXRCYBM;
 				INFOPLIST_FILE = "$(SRCROOT)/LSAT/Resource/Info.plist";
@@ -2968,7 +2968,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = exam.lsat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "LSAT Prod";
@@ -2988,7 +2988,7 @@
 				CODE_SIGN_ENTITLEMENTS = LSAT/LSAT.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = ZY9AXRCYBM;
 				INFOPLIST_FILE = "$(SRCROOT)/LSAT/Resource/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2996,7 +2996,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = exam.lsat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "LSAT Prod";
@@ -3014,7 +3014,7 @@
 				CODE_SIGN_ENTITLEMENTS = StatsWidgetsExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = ZY9AXRCYBM;
 				INFOPLIST_FILE = StatsWidgets/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -3023,7 +3023,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = exam.lsat.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "LSAT Widget Prod";
@@ -3041,7 +3041,7 @@
 				CODE_SIGN_ENTITLEMENTS = StatsWidgetsExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = ZY9AXRCYBM;
 				INFOPLIST_FILE = StatsWidgets/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -3050,7 +3050,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = exam.lsat.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "LSAT Widget Prod";

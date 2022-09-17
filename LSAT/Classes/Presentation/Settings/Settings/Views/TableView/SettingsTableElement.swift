@@ -21,7 +21,7 @@ struct SettingsPremium {
     let title: String
     let memberSince: String
     let validTill: String
-    let userId: Int?
+    let userId: String?
 }
 
 struct SettingsExam {

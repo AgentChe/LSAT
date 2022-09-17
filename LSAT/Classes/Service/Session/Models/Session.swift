@@ -8,7 +8,7 @@
 import RushSDK
 
 struct Session: Codable {
-    let userId: Int?
+    let userId: String?
     let userToken: String?
     let activeSubscription: Bool
     let usedProducts: [String]
