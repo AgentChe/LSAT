@@ -7,6 +7,7 @@
 //
 
 import RxSwift
+import SwiftyStoreKit
 
 protocol PaygateManagerProtocol {
     func retrievePaygate(forceUpdate: Bool) -> Single<PaygateMapper.PaygateResponse?>
@@ -28,11 +29,19 @@ extension PaygateManager {
             return .deferred { .just(paygate) }
         }
         
-        return SDKStorage.shared
-            .iapManager
-            .obtainProducts(ids: paygate.productsIds)
+        let products = Single<[IAPProduct]>.create { event in
+            SwiftyStoreKit.retrieveProductsInfo(Set(paygate.productsIds)) { result in
+                let products = result.retrievedProducts.map { IAPProduct(original: $0) }
+                
+                event(.success(products))
+            }
+            
+            return Disposables.create()
+        }
+        
+        return products
             .map { products -> [ProductPrice] in
-                products.map { ProductPrice(product: $0.product) }
+                products.map { ProductPrice(product: $0.original) }
             }
             .map { try PaygateMapper.parse(response: paygate.json, productsPrices: $0) }
     }

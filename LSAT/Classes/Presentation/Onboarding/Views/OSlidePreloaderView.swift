@@ -29,8 +29,7 @@ final class OSlidePreloaderView: OSlideView {
         progressView.progressAnimation(duration: 4.5)
         calculatePercent()
         
-        SDKStorage.shared
-            .amplitudeManager
+        AmplitudeManager.shared
             .logEvent(name: "Plan Preparing Screen", parameters: [:])
     }
 }

@@ -6,11 +6,12 @@
 //
 
 import RxCocoa
+import OtterScaleiOS
 
 protocol SessionManagerProtocol: AnyObject {
     func store(session: Session)
-    func set(userToken: String)
     func getSession() -> Session?
+    func hasActiveSubscriptions() -> Bool
 }
 
 final class SessionManager: SessionManagerProtocol {
@@ -29,28 +30,6 @@ extension SessionManager {
         UserDefaults.standard.setValue(data, forKey: Constants.sessionCacheKey)
     }
     
-    func set(userToken: String) {
-        let session: Session
-        
-        if let cachedSession = getSession() {
-            session = Session(userId: cachedSession.userId,
-                              userToken: userToken,
-                              activeSubscription: cachedSession.activeSubscription,
-                              usedProducts: cachedSession.usedProducts,
-                              accessValidTill: cachedSession.accessValidTill,
-                              userSince: cachedSession.userSince)
-        } else {
-            session = Session(userId: nil,
-                              userToken: userToken,
-                              activeSubscription: false,
-                              usedProducts: [],
-                              accessValidTill: nil,
-                              userSince: nil)
-        }
-        
-        store(session: session)
-    }
-    
     func getSession() -> Session? {
         guard
             let data = UserDefaults.standard.data(forKey: Constants.sessionCacheKey),
@@ -60,5 +39,25 @@ extension SessionManager {
         }
 
         return session
+    }
+    
+    func hasActiveSubscriptions() -> Bool {
+        guard let paymentData = OtterScale.shared.getPaymentData() else {
+            return false
+        }
+
+        let subscriptions = paymentData.subscriptions.appleAppStore
+            + paymentData.subscriptions.googlePlay
+            + paymentData.subscriptions.stripe
+            + paymentData.subscriptions.paypal
+        let nonConsumables = paymentData.nonConsumables.appleAppStore
+            + paymentData.nonConsumables.googlePlay
+            + paymentData.nonConsumables.stripe
+            + paymentData.nonConsumables.paypal
+
+        let hasValidSubscription = subscriptions.contains(where: { $0.valid })
+        let hasValidNonConsumable = nonConsumables.contains(where: { $0.valid })
+
+        return hasValidSubscription || hasValidNonConsumable
     }
 }

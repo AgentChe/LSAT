@@ -1,12 +1,11 @@
 //
-//  RestAPITransport+Retry.swift
-//  Nursing
+//  DefaultRequestWrapper.swift
+//  ITExams
 //
-//  Created by Андрей Чернышев on 14.03.2022.
+//  Created by Андрей Чернышев on 22.03.2022.
 //
 
 import RxSwift
-import RushSDK
 import Alamofire
 
 final class DefaultRequestWrapper {
@@ -22,7 +21,7 @@ private extension DefaultRequestWrapper {
             return .deferred { .error(NSError(domain: "Request wrapper attempt limited", code: 404)) }
         }
         
-        return SDKStorage.shared.restApiTransport
+        return RestAPITransport()
             .callServerApi(requestBody: request)
             .catchAndReturn(["_code": 500])
             .flatMap { [weak self] response -> Single<Any> in

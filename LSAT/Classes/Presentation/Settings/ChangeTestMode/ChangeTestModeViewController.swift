@@ -22,7 +22,7 @@ final class ChangeTestModeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        SDKStorage.shared.amplitudeManager
+        AmplitudeManager.shared
             .logEvent(name: "Exam Mode Screen", parameters: [:])
         
         viewModel.tryAgain = { [weak self] error -> Observable<Void> in
@@ -112,13 +112,13 @@ private extension ChangeTestModeViewController {
     func logAnalytics(_ mode: TestMode) {
         switch mode {
         case .fullComplect:
-            SDKStorage.shared.amplitudeManager
+            AmplitudeManager.shared
                 .logEvent(name: "Exam Mode Tap", parameters: ["what": "full support"])
         case .noExplanations:
-            SDKStorage.shared.amplitudeManager
+            AmplitudeManager.shared
                 .logEvent(name: "Exam Mode Tap", parameters: ["what": "without explanations"])
         case .onAnExam:
-            SDKStorage.shared.amplitudeManager
+            AmplitudeManager.shared
                 .logEvent(name: "Exam Mode Tap", parameters: ["what": "exam style"])
         }
     }

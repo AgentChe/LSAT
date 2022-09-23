@@ -30,8 +30,7 @@ final class OSlideGoalsView: OSlideView {
     override func moveToThis() {
         super.moveToThis()
         
-        SDKStorage.shared
-            .amplitudeManager
+        AmplitudeManager.shared
             .logEvent(name: "Goals Screen", parameters: [:])
     }
 }

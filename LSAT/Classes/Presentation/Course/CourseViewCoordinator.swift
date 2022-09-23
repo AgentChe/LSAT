@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import RushSDK
 
 final class CourseViewCoordinator {
     weak var parentVC: CourseViewController?
@@ -28,21 +27,21 @@ final class CourseViewCoordinator {
 
             changeVC(on: studyVC)
             
-            SDKStorage.shared.amplitudeManager
+            AmplitudeManager.shared
                 .logEvent(name: "Tab Bar Tap", parameters: ["what": "study"])
         case .stats:
             parentVC?.mainView.tabView.selectedTab = tab
             
             changeVC(on: statsVC)
             
-            SDKStorage.shared.amplitudeManager
+            AmplitudeManager.shared
                 .logEvent(name: "Tab Bar Tap", parameters: ["what": "stats"])
         case .review:
             parentVC?.mainView.tabView.selectedTab = tab
             
             changeVC(on: reviewVC)
             
-            SDKStorage.shared.amplitudeManager
+            AmplitudeManager.shared
                 .logEvent(name: "Tab Bar Tap", parameters: ["what": "review"])
         }
     }

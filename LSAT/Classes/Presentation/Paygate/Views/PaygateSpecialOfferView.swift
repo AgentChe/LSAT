@@ -325,7 +325,7 @@ private extension PaygateSpecialOfferView {
         let view = UIActivityIndicatorView()
         view.hidesWhenStopped = true
         view.style = .medium
-        view.color = .white
+        view.color = UIColor.white
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         return view

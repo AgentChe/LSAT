@@ -706,7 +706,7 @@ private extension TestViewModel {
         let name = isCorrect ? "Question Answered Correctly" : "Question Answered Incorrectly"
         let mode = TestAnalytics.name(mode: type)
         
-        SDKStorage.shared.amplitudeManager
+        AmplitudeManager.shared
             .logEvent(name: name, parameters: ["course" : courseName, "mode": mode])
     }
 }

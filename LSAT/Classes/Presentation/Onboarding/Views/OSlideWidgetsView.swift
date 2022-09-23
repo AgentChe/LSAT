@@ -26,8 +26,7 @@ final class OSlideWidgetsView: OSlideView {
     override func moveToThis() {
         super.moveToThis()
         
-        SDKStorage.shared
-            .amplitudeManager
+        AmplitudeManager.shared
             .logEvent(name: "Widgets Screen", parameters: [:])
     }
 }

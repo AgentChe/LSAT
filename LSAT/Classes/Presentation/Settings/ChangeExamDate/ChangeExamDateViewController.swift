@@ -22,8 +22,7 @@ final class ChangeExamDateViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        SDKStorage.shared
-            .amplitudeManager
+        AmplitudeManager.shared
             .logEvent(name: "When Exam Screen", parameters: [:])
         
         viewModel.tryAgain = { [weak self] error -> Observable<Void> in

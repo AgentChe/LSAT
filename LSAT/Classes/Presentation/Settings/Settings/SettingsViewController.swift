@@ -7,7 +7,7 @@
 
 import UIKit
 import RxSwift
-import RushSDK
+import OtterScaleiOS
 
 final class SettingsViewController: UIViewController {
     lazy var mainView = SettingsView()
@@ -23,7 +23,7 @@ final class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        SDKStorage.shared.amplitudeManager
+        AmplitudeManager.shared
             .logEvent(name: "Settings Screen", parameters: [:])
         
         viewModel.tryAgain = { [weak self] error -> Observable<Void> in
@@ -56,7 +56,7 @@ extension SettingsViewController {
 // MARK: SettingsTableDelegate
 extension SettingsViewController: SettingsTableDelegate {
     func settingsTableDidTappedUnlockPremium() {
-        SDKStorage.shared.amplitudeManager
+        AmplitudeManager.shared
             .logEvent(name: "Settings Tap", parameters: ["what": "unlock premium"])
         
         guard let rootViewController = UIApplication.shared.windows.filter({$0.isKeyWindow}).first?.rootViewController else {
@@ -67,7 +67,7 @@ extension SettingsViewController: SettingsTableDelegate {
     }
     
     func settingsTableDidTappedCourse() {
-        SDKStorage.shared.amplitudeManager
+        AmplitudeManager.shared
             .logEvent(name: "Settings Tap", parameters: ["what": "select exam"])
         
         guard let rootViewController = UIApplication.shared.windows.filter({$0.isKeyWindow}).first?.rootViewController else {
@@ -104,7 +104,7 @@ extension SettingsViewController: SettingsTableDelegate {
     }
     
     func settingsTableDidChanged(vibration: Bool) {
-        SDKStorage.shared.amplitudeManager
+        AmplitudeManager.shared
             .logEvent(name: "Settings Tap", parameters: ["what": vibration ? "vibration_on" : "vibration_off"])
         
         viewModel.newVibration.accept(vibration)
@@ -120,9 +120,9 @@ extension SettingsViewController: SettingsTableDelegate {
     }
     
     func settingsTableDidTappedRateUs() {
-        SDKStorage.shared.amplitudeManager
+        AmplitudeManager.shared
             .logEvent(name: "Rating Request ", parameters: [:])
-        SDKStorage.shared.amplitudeManager
+        AmplitudeManager.shared
             .logEvent(name: "Settings Tap", parameters: ["what": "rate us"])
         
         open(path: GlobalDefinitions.appStoreUrl)
@@ -140,7 +140,7 @@ extension SettingsViewController: SettingsTableDelegate {
             return
         }
         
-        SDKStorage.shared.amplitudeManager
+        AmplitudeManager.shared
             .logEvent(name: "Settings Tap", parameters: ["what": "share"])
         
         let vc = UIActivityViewController(activityItems: [url], applicationActivities: nil)
@@ -148,10 +148,10 @@ extension SettingsViewController: SettingsTableDelegate {
     }
     
     func settingsTableDidTappedContactUs() {
-        SDKStorage.shared.amplitudeManager
+        AmplitudeManager.shared
             .logEvent(name: "Settings Tap", parameters: ["what": "contact us"])
         
-        if let userId = SessionManager().getSession()?.userId {
+        if let userId = OtterScale.shared.getUserID() {
             open(path: GlobalDefinitions.contactUsUrl,
                  parameters: [("user_id", String(userId))])
         } else {
@@ -160,14 +160,14 @@ extension SettingsViewController: SettingsTableDelegate {
     }
     
     func settingsTableDidTappedTermsOfUse() {
-        SDKStorage.shared.amplitudeManager
+        AmplitudeManager.shared
             .logEvent(name: "Settings Tap", parameters: ["what": "terms of use"])
         
         open(path: GlobalDefinitions.termsOfServiceUrl)
     }
     
     func settingsTableDidTappedPrivacyPolicy() {
-        SDKStorage.shared.amplitudeManager
+        AmplitudeManager.shared
             .logEvent(name: "Settings Tap", parameters: ["what": "privacy policy"])
         
         open(path: GlobalDefinitions.privacyPolicyUrl)

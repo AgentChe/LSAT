@@ -7,7 +7,7 @@
 
 import RxSwift
 import RxCocoa
-import RushSDK
+import OtterScaleiOS
 
 final class SettingsViewModel {
     var tryAgain: ((Error) -> (Observable<Void>))?
@@ -23,7 +23,6 @@ final class SettingsViewModel {
     private lazy var coursesManager = CoursesManager()
     private lazy var profileManager = ProfileManager()
     private lazy var statsManager = StatsManager()
-    private lazy var sessionManager = SessionManager()
     
     private lazy var observableRetrySingle = ObservableRetrySingle()
 }
@@ -59,18 +58,12 @@ private extension SettingsViewModel {
     
     func makeSubscriptionElement() -> Driver<SettingsTableElement> {
         activeSubscription
-            .map { [weak self] activeSubscription -> SettingsTableElement in
-                guard let self = self else {
-                    return .offset(0)
-                }
-                
-                let session = self.sessionManager.getSession()
-                
+            .map { activeSubscription -> SettingsTableElement in
                 if activeSubscription {
                     let element = SettingsPremium(title: "Settings.Premium.Title".localized,
-                                                  memberSince: session?.userSince ?? "",
-                                                  validTill: session?.accessValidTill ?? "",
-                                                  userId: session?.userId)
+                                                  memberSince: OtterScale.shared.getUserSince() ?? "",
+                                                  validTill: OtterScale.shared.getAccessValidTill() ?? "",
+                                                  userId: OtterScale.shared.getUserID())
                     return .premium(element)
                 } else {
                     return .unlockPremium
@@ -215,11 +208,10 @@ private extension SettingsViewModel {
     }
     
     func makeActiveSubscription() -> Driver<Bool> {
-        SDKStorage.shared
-            .purchaseMediator
-            .rxPurchaseMediatorDidValidateReceipt
-            .map { $0?.activeSubscription ?? false }
+        PurchaseValidationObserver.shared
+            .didValidatedWithActiveSubscription
+            .map { SessionManager().hasActiveSubscriptions() }
             .asDriver(onErrorJustReturn: false)
-            .startWith(SessionManager().getSession()?.activeSubscription ?? false)
+            .startWith(SessionManager().hasActiveSubscriptions())
     }
 }

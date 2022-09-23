@@ -10,7 +10,6 @@ import RxSwift
 import RxCocoa
 import AVFoundation
 import AVKit
-import RushSDK
 
 final class TestViewController: UIViewController {
     lazy var mainView = TestView(testType: testType)
@@ -158,6 +157,7 @@ final class TestViewController: UIViewController {
             .filter { $0 == .back }
             .bind(to: Binder(self) { base, _ in
                 base.dismiss(animated: true)
+                FirebaseManager.shared.logEvent(name: "client_test_finished")
             })
             .disposed(by: disposeBag)
         
@@ -410,7 +410,7 @@ private extension TestViewController {
         
         let name = TestAnalytics.name(mode: type)
         
-        SDKStorage.shared.amplitudeManager
+        AmplitudeManager.shared
             .logEvent(name: "Question Screen", parameters: ["course": courseName,
                                                             "mode": name])
     }
@@ -422,7 +422,7 @@ private extension TestViewController {
         
         let name = TestAnalytics.name(mode: type)
         
-        SDKStorage.shared.amplitudeManager
+        AmplitudeManager.shared
             .logEvent(name: "Question Tap", parameters: ["course": courseName,
                                                          "mode": name,
                                                          "what": what])

@@ -41,8 +41,7 @@ final class OSlidePlanView: OSlideView {
     override func moveToThis() {
         chartView.play()
         
-        SDKStorage.shared
-            .amplitudeManager
+        AmplitudeManager.shared
             .logEvent(name: "Personal Plan Screen", parameters: [:])
     }
 }

@@ -54,8 +54,7 @@ private extension OSlideWelcomeView {
         
         indicatorView.index = 1
         
-        SDKStorage.shared
-            .amplitudeManager
+        AmplitudeManager.shared
             .logEvent(name: "Welcome Screen", parameters: ["number": 1])
     }
     
@@ -68,8 +67,7 @@ private extension OSlideWelcomeView {
             return
         }
         
-        SDKStorage.shared
-            .amplitudeManager
+        AmplitudeManager.shared
             .logEvent(name: "Welcome Screen", parameters: ["number": indicatorView.index])
         
         scroll()

@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import OtterScaleiOS
 
 final class SplashViewController: UIViewController {
     lazy var mainView = SplashView()
@@ -16,19 +17,8 @@ final class SplashViewController: UIViewController {
     
     private lazy var viewModel = SplashViewModel()
     
-    private lazy var sdkInitialize = SplashSDKInitialize(vc: self, rushSDKSignal: generateStep)
-    
-    private let generateStep: Signal<Bool>
-    
-    private init(generateStep: Signal<Bool>) {
-        self.generateStep = generateStep
-        
-        super.init(nibName: nil, bundle: .main)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    private lazy var sdkInitialize = SplashSDKInitialize()
+    private lazy var onboardingNavigate = SplashOnboardingNavigate(vc: self, viewModel: viewModel)
     
     override func loadView() {
         view = mainView
@@ -36,14 +26,6 @@ final class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        viewModel.tryAgain = { [weak self] error -> Observable<Void> in
-            guard let self = self else {
-                return .never()
-            }
-            
-            return self.openError()
-        }
         
         sdkInitialize.initialize { [weak self] progress in
             guard let self = self else {
@@ -56,27 +38,36 @@ final class SplashViewController: UIViewController {
             case .initializing:
                 self.activity(state: .sdkInitialize)
             case .complete:
-                // MARK: задержка, чтобы токен успел сохраниться до запросов на кеширование контента
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-                    self.activity(state: .library)
-                    self.viewModel.validationComplete.accept(Void())
-                }
+                self.activity(state: .library)
+                self.viewModel.validationComplete.accept(Void())
             }
         }
         
         viewModel.step()
-            .drive(Binder(self) { base, step in
-                base.activity(state: step == .onboarding ? .prepareOnboarding : .none)
-                base.step(step)
+            .drive(onNext: { [weak self] step in
+                guard let self = self else {
+                    return
+                }
+                
+                self.activity(state: step == .onboarding ? .prepareOnboarding : .none)
+                self.step(step)
             })
             .disposed(by: disposeBag)
+        
+        viewModel.tryAgain = { [weak self] error -> Observable<Void> in
+            guard let self = self else {
+                return .never()
+            }
+            
+            return self.openError()
+        }
     }
 }
 
 // MARK: Make
 extension SplashViewController {
-    static func make(generateStep: Signal<Bool>) -> SplashViewController {
-        SplashViewController(generateStep: generateStep)
+    static func make() -> SplashViewController {
+        SplashViewController()
     }
 }
 
@@ -99,7 +90,20 @@ private extension SplashViewController {
     func step(_ step: SplashViewModel.Step) {
         switch step {
         case .onboarding:
-            UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController = OnboardingViewController.make()
+            onboardingNavigate.navigate { [weak self] progress in
+                guard let self = self else {
+                    return
+                }
+                
+                switch progress {
+                case .error:
+                    self.activity(state: .none)
+                case .downloading:
+                    self.activity(state: .prepareOnboarding)
+                case .complete:
+                    UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController = OnboardingViewController.make()
+                }
+            }
         case .course:
             UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController = CourseViewController.make()
         case .paygate:
@@ -138,6 +142,5 @@ private extension SplashViewController {
                 
                 return Disposables.create()
             }
-        
     }
 }

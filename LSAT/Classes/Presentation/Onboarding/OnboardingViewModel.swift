@@ -19,7 +19,7 @@ final class OnboardingViewModel {
     private lazy var monetizationManager = MonetizationManager()
 
     func whatNext() -> Step {
-        let hasActiveSubscription = sessionManager.getSession()?.activeSubscription ?? false
+        let hasActiveSubscription = sessionManager.hasActiveSubscriptions()
 
         if hasActiveSubscription {
             return .nextScreen

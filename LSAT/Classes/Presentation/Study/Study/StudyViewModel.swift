@@ -201,11 +201,10 @@ private extension StudyViewModel {
     }
     
     func makeActiveSubscription() -> Driver<Bool> {
-        SDKStorage.shared
-            .purchaseMediator
-            .rxPurchaseMediatorDidValidateReceipt
-            .map { $0?.activeSubscription ?? false }
+        PurchaseValidationObserver.shared
+            .didValidatedWithActiveSubscription
+            .map { SessionManager().hasActiveSubscriptions() }
             .asDriver(onErrorJustReturn: false)
-            .startWith(SessionManager().getSession()?.activeSubscription ?? false)
+            .startWith(SessionManager().hasActiveSubscriptions())
     }
 }

@@ -27,7 +27,7 @@ final class StudyViewController: UIViewController {
         viewModel
             .courseName
             .drive(onNext: { name in
-                SDKStorage.shared.amplitudeManager
+                AmplitudeManager.shared
                     .logEvent(name: "Study Screen", parameters: ["exam": name])
             })
             .disposed(by: disposeBag)
@@ -90,7 +90,7 @@ private extension StudyViewController {
     func settingsTapped() {
         navigationController?.pushViewController(SettingsViewController.make(), animated: true)
         
-        SDKStorage.shared.amplitudeManager
+        AmplitudeManager.shared
             .logEvent(name: "Study Tap", parameters: ["what": "settings"])
     }
     
@@ -101,12 +101,12 @@ private extension StudyViewController {
         case .unlockAllQuestions:
             openPaygate()
             
-            SDKStorage.shared.amplitudeManager
+            AmplitudeManager.shared
                 .logEvent(name: "Study Tap", parameters: ["what": "unlock all questions"])
         case .takeTest(let activeSubscription):
             openTest(type: .get(testId: nil), activeSubscription: activeSubscription)
             
-            SDKStorage.shared.amplitudeManager
+            AmplitudeManager.shared
                 .logEvent(name: "Study Tap", parameters: ["what": "take a free test"])
         case .mode(let mode):
             tapped(mode: mode.mode, activeSubscription: activeSubscription)
@@ -118,32 +118,32 @@ private extension StudyViewController {
         case .ten:
             openTest(type: .tenSet, activeSubscription: activeSubscription)
             
-            SDKStorage.shared.amplitudeManager
+            AmplitudeManager.shared
                 .logEvent(name: "Study Tap", parameters: ["what": "10 questions"])
         case .random:
             openTest(type: .randomSet, activeSubscription: activeSubscription)
             
-            SDKStorage.shared.amplitudeManager
+            AmplitudeManager.shared
                 .logEvent(name: "Study Tap", parameters: ["what": "random set"])
         case .missed:
             openTest(type: .failedSet, activeSubscription: activeSubscription)
             
-            SDKStorage.shared.amplitudeManager
+            AmplitudeManager.shared
                 .logEvent(name: "Study Tap", parameters: ["what": "missed questions"])
         case .today:
             openTest(type: .qotd, activeSubscription: activeSubscription)
             
-            SDKStorage.shared.amplitudeManager
+            AmplitudeManager.shared
                 .logEvent(name: "Study Tap", parameters: ["what": "question of the day"])
         case .saved:
             openTest(type: .saved, activeSubscription: activeSubscription)
             
-            SDKStorage.shared.amplitudeManager
+            AmplitudeManager.shared
                 .logEvent(name: "Study Tap", parameters: ["what": "saved questions"])
         case .timed:
             openTimedTest(activeSubscription: activeSubscription)
             
-            SDKStorage.shared.amplitudeManager
+            AmplitudeManager.shared
                 .logEvent(name: "Study Tap", parameters: ["what": "timed questions"])
         }
     }

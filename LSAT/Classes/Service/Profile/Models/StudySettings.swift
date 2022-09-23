@@ -13,7 +13,7 @@ struct StudySettings: Codable, Hashable {
 // MARK: Public
 extension StudySettings {
     static var `default`: StudySettings {
-        StudySettings(vibration: true,
+        StudySettings(vibration: false,
                       textSize: TextSize(percent: 100))
     }
     

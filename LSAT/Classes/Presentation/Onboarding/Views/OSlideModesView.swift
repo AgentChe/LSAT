@@ -42,8 +42,7 @@ final class OSlideModesView: OSlideView {
     override func moveToThis() {
         super.moveToThis()
         
-        SDKStorage.shared
-            .amplitudeManager
+        AmplitudeManager.shared
             .logEvent(name: "Exam Mode Screen", parameters: [:])
     }
 }
@@ -103,16 +102,13 @@ private extension OSlideModesView {
                 
                 switch mode {
                 case 0:
-                    SDKStorage.shared
-                        .amplitudeManager
+                    AmplitudeManager.shared
                         .logEvent(name: "Exam Mode Tap", parameters: ["what": "full support"])
                 case 1:
-                    SDKStorage.shared
-                        .amplitudeManager
+                    AmplitudeManager.shared
                         .logEvent(name: "Exam Mode Tap", parameters: ["what": "without explanations"])
                 case 2:
-                    SDKStorage.shared
-                        .amplitudeManager
+                    AmplitudeManager.shared
                         .logEvent(name: "Exam Mode Tap", parameters: ["what": "exam style"])
                 default:
                     break

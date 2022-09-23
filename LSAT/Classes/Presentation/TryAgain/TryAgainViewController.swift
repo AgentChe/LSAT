@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import OtterScaleiOS
 
 protocol TryAgainViewControllerDelegate: AnyObject {
     func tryAgainDidTapped()
@@ -71,7 +72,7 @@ private extension TryAgainViewController {
     func openContactUs() {
         var parameters: [(String, String)]?
         
-        if let userId = SessionManager().getSession()?.userId {
+        if let userId = OtterScale.shared.getUserID() {
             parameters = [("user_id", String(userId))]
         }
         

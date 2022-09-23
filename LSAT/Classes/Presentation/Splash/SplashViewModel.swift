@@ -7,6 +7,7 @@
 
 import RxSwift
 import RxCocoa
+import OtterScaleiOS
 
 final class SplashViewModel {
     enum Step {
@@ -23,11 +24,12 @@ final class SplashViewModel {
     private lazy var sessionManager = SessionManager()
     private lazy var profileManager = ProfileManager()
     private lazy var paygateManager = PaygateManager()
+    private lazy var questionManager = QuestionManager()
     
     private lazy var observableRetrySingle = ObservableRetrySingle()
     
     func step() -> Driver<Step> {
-        let initial = validationComplete
+        let initial = handleValidationComplete()
             .flatMap { [weak self] _ -> Observable<Void> in
                 guard let self = self else {
                     return .never()
@@ -56,10 +58,49 @@ final class SplashViewModel {
         
         return Driver.merge(initial, afterCourseSelected)
     }
+    
+    func obtainOnboardingSet() -> Driver<Test?> {
+        questionManager
+            .obtainOnboardingSet(forceUpdate: true)
+            .asDriver(onErrorJustReturn: nil)
+    }
 }
 
 // MARK: Private
 private extension SplashViewModel {
+    func handleValidationComplete() -> Observable<Void> {
+        validationComplete.flatMapLatest { [weak self] _ -> Single<Void> in
+            guard let self = self else {
+                return .never()
+            }
+            
+            let otterScaleID = OtterScale.shared.getInternalID()
+            
+            let complete: Single<Void>
+            
+            if let cachedToken = self.sessionManager.getSession()?.userToken {
+                if cachedToken != otterScaleID {
+                    complete = self.profileManager.syncTokens(oldToken: cachedToken, newToken: otterScaleID)
+                } else {
+                    complete = .deferred { .just(Void()) }
+                }
+            } else {
+                complete = self.profileManager.login(userToken: otterScaleID)
+            }
+            
+            return complete.flatMap { [weak self] _ -> Single<Void> in
+                guard let self = self else {
+                    return .never()
+                }
+                
+                let session = Session(userToken: otterScaleID)
+                self.sessionManager.store(session: session)
+                
+                return .deferred { .just(Void()) }
+            }
+        }
+    }
+    
     func library() -> Observable<Void> {
         func source() -> Single<Void> {
             Single
@@ -133,7 +174,7 @@ private extension SplashViewModel {
     }
     
     func needPayment() -> Bool {
-        let activeSubscription = sessionManager.getSession()?.activeSubscription ?? false
+        let activeSubscription = sessionManager.hasActiveSubscriptions()
         return !activeSubscription
     }
 }
